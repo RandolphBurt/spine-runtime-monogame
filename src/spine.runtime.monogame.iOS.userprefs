@@ -1,21 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPad.5.0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="demo/TestViewController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="demo/AppDelegate.cs">
     <Files>
-      <File FileName="demo/AppDelegate.cs" Line="32" Column="55" />
-      <File FileName="demo/TestViewController.cs" Line="61" Column="4" />
-      <File FileName="demo/TestViewController.designer.cs" Line="15" Column="3" />
-      <File FileName="demo/Content/crab.json" Line="9" Column="19" />
+      <File FileName="demo/AppDelegate.cs" Line="29" Column="48" />
+      <File FileName="demo/AnimationDemo.cs" Line="9" Column="41" />
+      <File FileName="runtime/Bone.cs" Line="7" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
+        <State expanded="True" selected="True">
           <Node name="demo" expanded="True">
             <Node name="Content" expanded="True" />
-            <Node name="TestViewController.cs" expanded="True" />
           </Node>
           <Node name="spine.runtime.monogame.iOS" expanded="True" />
-          <Node name="TexturePacker.Import.iOS" expanded="True" selected="True" />
+          <Node name="TexturePacker.Import.iOS" expanded="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
@@ -24,10 +22,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/randolph/Projects/Development/GitHub/spine-runtime-monogame/src/demo/TestViewController.cs" line="45" />
-      <Breakpoint file="/Users/randolph/Projects/Development/GitHub/spine-runtime-monogame/src/demo/TestViewController.cs" line="50" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
