@@ -90,10 +90,12 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Content\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
+    <None Include="Content\skeleton-Jump.json" />
+    <None Include="Content\skeleton-skeleton.json" />
+    <None Include="Content\skeleton-WalkLeft.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
