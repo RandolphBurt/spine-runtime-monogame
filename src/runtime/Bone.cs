@@ -73,8 +73,8 @@ namespace Spine.Runtime.MonoGame
 				worldScaleY = scaleY;
 				worldRotation = rotation;
 			}
-			float cos = MathUtils.cosDeg (worldRotation);
-			float sin = MathUtils.sinDeg (worldRotation);
+			float cos = MathUtils.CosDeg (worldRotation);
+			float sin = MathUtils.SinDeg (worldRotation);
 			m00 = cos * worldScaleX;
 			m10 = sin * worldScaleX;
 			m01 = -sin * worldScaleY;

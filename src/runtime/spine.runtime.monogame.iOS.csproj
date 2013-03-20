@@ -39,6 +39,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Utils\" />
+    <Folder Include="Animation\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -53,6 +54,17 @@
     <Compile Include="Skeleton.cs" />
     <Compile Include="SkeletonData.cs" />
     <Compile Include="Skin.cs" />
+    <Compile Include="SkeletonJson.cs" />
+    <Compile Include="Animation\Animation.cs" />
+    <Compile Include="Animation\ITimeline.cs" />
+    <Compile Include="Animation\CurveTimeline.cs" />
+    <Compile Include="Animation\RotateTimeline.cs" />
+    <Compile Include="Animation\TranslateTimeline.cs" />
+    <Compile Include="Animation\ScaleTimeline.cs" />
+    <Compile Include="Utils\SearchUtils.cs" />
+    <Compile Include="Animation\ColorTimeline.cs" />
+    <Compile Include="Animation\AttachmentTimeline.cs" />
+    <Compile Include="Animation\AnimationState.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">
