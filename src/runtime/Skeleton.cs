@@ -353,5 +353,10 @@ namespace Spine.Runtime.MonoGame
 		{
 			time += delta;
 		}
+
+		public String toString () 
+		{
+			return data.name != null ? data.name : base.ToString();
+		}
 	}
 }

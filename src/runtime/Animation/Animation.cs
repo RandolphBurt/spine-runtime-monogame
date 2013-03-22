@@ -9,6 +9,7 @@ namespace Spine.Runtime.MonoGame
 
 	public class Animation
 	{
+		private String name;
 		private readonly List<ITimeline> timelines;
 		private float duration;
 		
@@ -76,6 +77,21 @@ namespace Spine.Runtime.MonoGame
 			{
 				timeline.apply (skeleton, time, alpha);
 			}
+		}
+
+		
+		/** @return May be null. */
+		public String getName () {
+			return name;
+		}
+		
+		/** @param name May be null. */
+		public void setName (String name) {
+			this.name = name;
+		}
+		
+		public String toString () {
+			return name != null ? name : base.ToString();
 		}
 	}
 }

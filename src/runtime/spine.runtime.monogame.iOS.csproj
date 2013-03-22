@@ -65,6 +65,7 @@
     <Compile Include="Animation\ColorTimeline.cs" />
     <Compile Include="Animation\AttachmentTimeline.cs" />
     <Compile Include="Animation\AnimationState.cs" />
+    <Compile Include="Animation\AnimationStateData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">

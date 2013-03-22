@@ -9,6 +9,7 @@ namespace Spine.Runtime.MonoGame
 
 	public class SkeletonData
 	{
+		internal string name;
 		internal readonly List<BoneData> bones = new List<BoneData> (); // Ordered parents first.
 		internal readonly List<SlotData> slots = new List<SlotData> (); // Bind pose draw order.
 		internal readonly List<Skin> skins = new List<Skin> ();
@@ -140,6 +141,23 @@ namespace Spine.Runtime.MonoGame
 		public List<Skin> getSkins ()
 		{
 			return skins;
+		}
+
+		/** @return May be null. */
+		public String getName ()
+		{
+			return name;
+		}
+		
+		/** @param name May be null. */
+		public void setName (String name)
+		{
+			this.name = name;
+		}
+		
+		public String toString ()
+		{
+			return name != null ? name : base.ToString ();
 		}
 	}
 }
