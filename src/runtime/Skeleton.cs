@@ -10,6 +10,8 @@ namespace Spine.Runtime.MonoGame
 	using Microsoft.Xna.Framework;
 	using Microsoft.Xna.Framework.Graphics;
 
+	using Spine.Runtime.MonoGame.Attachments;
+
 	public class Skeleton
 	{
 		internal readonly SkeletonData data;

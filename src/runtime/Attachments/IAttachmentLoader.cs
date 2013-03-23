@@ -2,7 +2,7 @@
 /// AttachmentLoader interface
 /// 2013-March
 /// </summary>
-namespace Spine.Runtime.MonoGame
+namespace Spine.Runtime.MonoGame.Attachments
 {
 	using System;
 

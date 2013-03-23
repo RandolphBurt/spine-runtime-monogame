@@ -35,18 +35,21 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Utils\" />
     <Folder Include="Animation\" />
+    <Folder Include="Attachments\" />
+    <Folder Include="Json\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="Bone.cs" />
     <Compile Include="AttachmentType.cs" />
-    <Compile Include="IAttachmentLoader.cs" />
-    <Compile Include="Attachment.cs" />
     <Compile Include="BoneData.cs" />
     <Compile Include="Slot.cs" />
     <Compile Include="SlotData.cs" />
@@ -54,7 +57,6 @@
     <Compile Include="Skeleton.cs" />
     <Compile Include="SkeletonData.cs" />
     <Compile Include="Skin.cs" />
-    <Compile Include="SkeletonJson.cs" />
     <Compile Include="Animation\Animation.cs" />
     <Compile Include="Animation\ITimeline.cs" />
     <Compile Include="Animation\CurveTimeline.cs" />
@@ -66,6 +68,17 @@
     <Compile Include="Animation\AttachmentTimeline.cs" />
     <Compile Include="Animation\AnimationState.cs" />
     <Compile Include="Animation\AnimationStateData.cs" />
+    <Compile Include="Attachments\RegionAttachment.cs" />
+    <Compile Include="Attachments\RegionSequenceAttachment.cs" />
+    <Compile Include="Attachments\RegionSequenceMode.cs" />
+    <Compile Include="Attachments\RegionSequenceModeConvert.cs" />
+    <Compile Include="Attachments\TextureAtlasAttachmentLoader.cs" />
+    <Compile Include="Attachments\TextureAtlas.cs" />
+    <Compile Include="Attachments\Attachment.cs" />
+    <Compile Include="Attachments\IAttachmentLoader.cs" />
+    <Compile Include="Json\SkeletonJsonReader.cs" />
+    <Compile Include="Json\AnimationJsonReader.cs" />
+    <Compile Include="Json\BaseJsonReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">

@@ -21,9 +21,15 @@ namespace Spine.Runtime.MonoGame
 		public float getMixing (Animation from, Animation to) {
 			tempKey.a1 = from;
 			tempKey.a2 = to;
-			float time = animationToMixTime[tempKey];
-			if (time == null) return 0;
-			return time;
+
+			if (animationToMixTime.ContainsKey(tempKey))
+			{
+				return animationToMixTime[tempKey];
+			}
+			else
+			{
+				return 0;
+			}
 		}
 		
 		internal class Key {

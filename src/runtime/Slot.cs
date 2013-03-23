@@ -7,6 +7,8 @@ namespace Spine.Runtime.MonoGame
 	using System;
 	using Microsoft.Xna.Framework;
 
+	using Spine.Runtime.MonoGame.Attachments;
+
 	public class Slot
 	{
 		internal readonly SlotData data;

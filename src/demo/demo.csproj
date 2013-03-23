@@ -93,9 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
-    <None Include="Content\skeleton-Jump.json" />
-    <None Include="Content\skeleton-skeleton.json" />
-    <None Include="Content\skeleton-WalkLeft.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -120,5 +117,8 @@
   <ItemGroup>
     <Content Include="Content\crab.json" />
     <Content Include="Content\crab.png" />
+    <Content Include="Content\skeleton-Jump.json" />
+    <Content Include="Content\skeleton-WalkLeft.json" />
+    <Content Include="Content\skeleton-skeleton.json" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,8 @@ namespace Spine.Runtime.MonoGame
 	using System;
 	using System.Collections.Generic;
 
+	using Spine.Runtime.MonoGame.Attachments;
+
 	/** Stores attachments by slot index and attachment name. */
 	public class Skin
 	{
