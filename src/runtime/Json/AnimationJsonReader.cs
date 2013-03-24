@@ -33,8 +33,8 @@ namespace Spine.Runtime.MonoGame.Json
 			var jsonText = File.ReadAllText (jsonFile);
 			JObject data = JObject.Parse (jsonText);
 
-			var boneTimelines = this.ReadBones (skeletonData, data, scale);
-			var slotTimelines = this.ReadSlots (skeletonData, data);
+			var boneTimelines = this.ReadAnimationBones (skeletonData, data, scale);
+			var slotTimelines = this.ReadAnimationSlots (skeletonData, data);
 
 			timelines.AddRange (boneTimelines);
 			timelines.AddRange (slotTimelines);
@@ -58,7 +58,7 @@ namespace Spine.Runtime.MonoGame.Json
 			return animation;
 		}
 
-		private List<ITimeline> ReadBones (SkeletonData skeletonData, JObject data, float scale)
+		private List<ITimeline> ReadAnimationBones (SkeletonData skeletonData, JObject data, float scale)
 		{
 			List<ITimeline> timelines = new List<ITimeline> ();
 
@@ -79,15 +79,15 @@ namespace Spine.Runtime.MonoGame.Json
 					switch (timelineType.Name)
 					{
 						case TIMELINE_ROTATE:
-							timeline = this.ReadRotationTimeline (jsonTimelineList, boneIndex);
+							timeline = this.ReadAnimationRotationTimeline (jsonTimelineList, boneIndex);
 							break;
 							
 						case TIMELINE_TRANSLATE:
-							timeline = this.ReadTranslationTimeline (jsonTimelineList, boneIndex, scale);
+							timeline = this.ReadAnimationTranslationTimeline (jsonTimelineList, boneIndex, scale);
 							break;
 							
 						case TIMELINE_SCALE:
-							timeline = this.ReadScaleTimeline (jsonTimelineList, boneIndex);
+							timeline = this.ReadAnimationScaleTimeline (jsonTimelineList, boneIndex);
 							break;
 							
 						default:
@@ -101,11 +101,11 @@ namespace Spine.Runtime.MonoGame.Json
 			return timelines;
 		}
 
-		private List<ITimeline> ReadSlots (SkeletonData skeletonData, JObject data)
+		private List<ITimeline> ReadAnimationSlots (SkeletonData skeletonData, JObject data)
 		{
 			List<ITimeline> timelines = new List<ITimeline> ();
 
-			var dataSlots = data["slots"];
+			var dataSlots = data ["slots"];
 
 			if (dataSlots != null)
 			{
@@ -123,11 +123,11 @@ namespace Spine.Runtime.MonoGame.Json
 						{
 							case TIMELINE_COLOR:
 								
-								timeline = this.ReadColorTimeline (jsonTimelineList, slotIndex);
+								timeline = this.ReadAnimationColorTimeline (jsonTimelineList, slotIndex);
 								break;
 								
 							case TIMELINE_ATTACHMENT:
-								timeline = this.ReadAttachmentTimeline (jsonTimelineList, slotIndex);
+								timeline = this.ReadAnimationAttachmentTimeline (jsonTimelineList, slotIndex);
 								break;
 								
 							default:
@@ -142,25 +142,25 @@ namespace Spine.Runtime.MonoGame.Json
 			return timelines;
 		}
 
-		private ITimeline ReadTranslationTimeline (JArray jsonTimelineList, int boneIndex, float scale)
+		private ITimeline ReadAnimationTranslationTimeline (JArray jsonTimelineList, int boneIndex, float scale)
 		{
 			var translateTimeline = new TranslateTimeline (jsonTimelineList.Count);
 
-			this.PopulateTranslationScaleTimeline (translateTimeline, jsonTimelineList, boneIndex, scale);
+			this.PopulateAnimationTranslationScaleTimeline (translateTimeline, jsonTimelineList, boneIndex, scale);
 
 			return translateTimeline;
 		}
 
-		private ITimeline ReadScaleTimeline (JArray jsonTimelineList, int boneIndex)
+		private ITimeline ReadAnimationScaleTimeline (JArray jsonTimelineList, int boneIndex)
 		{
 			var scaleTimeline = new ScaleTimeline (jsonTimelineList.Count);
 
-			this.PopulateTranslationScaleTimeline (scaleTimeline, jsonTimelineList, boneIndex, 1);
+			this.PopulateAnimationTranslationScaleTimeline (scaleTimeline, jsonTimelineList, boneIndex, 1);
 
 			return scaleTimeline;
 		}
 
-		private void PopulateTranslationScaleTimeline (TranslateTimeline translateScaleTimeline, JArray jsonTimelineList, int boneIndex, float timelineScale)
+		private void PopulateAnimationTranslationScaleTimeline (TranslateTimeline translateScaleTimeline, JArray jsonTimelineList, int boneIndex, float timelineScale)
 		{
 			translateScaleTimeline.setBoneIndex (boneIndex);
 			
@@ -171,12 +171,12 @@ namespace Spine.Runtime.MonoGame.Json
 				float x = this.Read<float> (jsonTimeline, "x", 0);
 				float y = this.Read<float> (jsonTimeline, "y", 0);
 				translateScaleTimeline.setKeyframe (keyframeIndex, time, x * timelineScale, y * timelineScale);
-				this.ReadCurve (translateScaleTimeline, keyframeIndex, jsonTimeline);
+				this.ReadAnimationCurve (translateScaleTimeline, keyframeIndex, jsonTimeline);
 				keyframeIndex++;
 			}
 		}
 
-		private RotateTimeline ReadRotationTimeline (JArray jsonTimelineList, int boneIndex)
+		private RotateTimeline ReadAnimationRotationTimeline (JArray jsonTimelineList, int boneIndex)
 		{
 			var rotateTimeline = new RotateTimeline (jsonTimelineList.Count);
 			rotateTimeline.setBoneIndex (boneIndex);
@@ -186,14 +186,14 @@ namespace Spine.Runtime.MonoGame.Json
 			{
 				float time = (float)jsonTimeline ["time"];
 				rotateTimeline.setKeyframe (keyframeIndex, time, (float)jsonTimeline ["angle"]);
-				this.ReadCurve (rotateTimeline, keyframeIndex, jsonTimeline);
+				this.ReadAnimationCurve (rotateTimeline, keyframeIndex, jsonTimeline);
 				keyframeIndex++;
 			}
 
 			return rotateTimeline;
 		}
 
-		private ColorTimeline ReadColorTimeline (JArray jsonTimelineList, int slotIndex)
+		private ColorTimeline ReadAnimationColorTimeline (JArray jsonTimelineList, int slotIndex)
 		{
 			var colorTimeline = new ColorTimeline (jsonTimelineList.Count);
 			colorTimeline.setSlotIndex (slotIndex);
@@ -204,14 +204,14 @@ namespace Spine.Runtime.MonoGame.Json
 				float time = (float)timeline ["time"];
 				Color color = this.ReadColor ((String)timeline ["color"]);
 				colorTimeline.setKeyframe (keyframeIndex, time, color.R, color.G, color.B, color.A);
-				this.ReadCurve (colorTimeline, keyframeIndex, timeline);
+				this.ReadAnimationCurve (colorTimeline, keyframeIndex, timeline);
 				keyframeIndex++;
 			}
 
 			return colorTimeline;
 		}
 
-		private AttachmentTimeline ReadAttachmentTimeline (JArray jsonTimelineList, int slotIndex)
+		private AttachmentTimeline ReadAnimationAttachmentTimeline (JArray jsonTimelineList, int slotIndex)
 		{
 			AttachmentTimeline attachmentTimeline = new AttachmentTimeline (jsonTimelineList.Count);
 			attachmentTimeline.setSlotIndex (slotIndex);
@@ -226,7 +226,7 @@ namespace Spine.Runtime.MonoGame.Json
 			return attachmentTimeline;
 		}
 		
-		private void ReadCurve (CurveTimeline timeline, int keyframeIndex, JToken valueMap)
+		private void ReadAnimationCurve (CurveTimeline timeline, int keyframeIndex, JToken valueMap)
 		{
 			JToken curveObject = valueMap ["curve"];
 			if (curveObject == null)
@@ -238,10 +238,11 @@ namespace Spine.Runtime.MonoGame.Json
 				JArray curve = (JArray)curveObject;
 				timeline.setCurve (keyframeIndex, (float)curve [0], (float)curve [1], (float)curve [2], (float)curve [3]);
 			}
-			else if (curveObject.Value<string> ().Equals ("stepped"))
-			{
-				timeline.setStepped (keyframeIndex);
-			}
+			else
+			if (curveObject.Value<string> ().Equals ("stepped"))
+				{
+					timeline.setStepped (keyframeIndex);
+				}
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Spine.Runtime.MonoGame.Json
 	using System;
 	using System.IO;	
 	using System.Runtime.Serialization;
-	
+
 	using Newtonsoft.Json.Linq;
 
 	using Spine.Runtime.MonoGame.Attachments;
@@ -18,7 +18,7 @@ namespace Spine.Runtime.MonoGame.Json
 
 		public SkeletonJsonReader (TextureAtlas atlas)
 		{
-			this.attachmentLoader = new TextureAtlasAttachmentLoader(atlas);
+			this.attachmentLoader = new TextureAtlasAttachmentLoader (atlas);
 		}
 
 		public SkeletonJsonReader (IAttachmentLoader attachmentLoader)
@@ -34,40 +34,9 @@ namespace Spine.Runtime.MonoGame.Json
 			var jsonText = File.ReadAllText (jsonFile);
 			JObject data = JObject.Parse (jsonText);
 
-			foreach (var bone in data["bones"].Children())
-			{
-				this.ReadBone (skeletonData, bone, scale);
-			}
-
-			foreach (var slot in data["slots"].Children())
-			{
-				this.ReadSlot (skeletonData, slot);
-			}
-			
-			foreach (JProperty skin in data["skins"])
-			{
-				Skin skeletonSkin = new Skin (skin.Name);
-
-				foreach (JProperty slot in skin.Value)
-				{
-					int slotIndex = skeletonData.findSlotIndex (slot.Name);
-
-					foreach (JProperty attachment in slot.Value)
-					{
-						Attachment skeletonAttachment = this.ReadAttachment (attachment.Name, attachment.Value, scale);
-						if (attachment != null)
-						{
-							skeletonSkin.addAttachment (slotIndex, attachment.Name, skeletonAttachment);
-						}
-					}
-				}
-
-				skeletonData.addSkin (skeletonSkin);
-				if (skeletonSkin.name.Equals ("default"))
-				{
-					skeletonData.setDefaultSkin (skeletonSkin);
-				}
-			}
+			this.ReadSkeletonBones (skeletonData, data, scale);
+			this.ReadSkeletonSlots (skeletonData, data);
+			this.ReadSkeletonSkins (skeletonData, data, scale);
 
 			skeletonData.bones.TrimExcess ();
 			skeletonData.slots.TrimExcess ();
@@ -75,10 +44,37 @@ namespace Spine.Runtime.MonoGame.Json
 
 			return new Skeleton (skeletonData);
 		}
-		
-		private Attachment ReadAttachment (String name, JToken map, float scale)
-		{
 
+		private void ReadSkeletonSkins (SkeletonData skeletonData, JObject data, float scale)
+		{
+			foreach (JProperty skin in data["skins"])
+			{
+				Skin skeletonSkin = new Skin (skin.Name);
+				
+				foreach (JProperty slot in skin.Value)
+				{
+					int slotIndex = skeletonData.findSlotIndex (slot.Name);
+					
+					foreach (JProperty attachment in slot.Value)
+					{
+						Attachment skeletonAttachment = this.ReadSkeletonAttachment (attachment.Name, attachment.Value, scale);
+						if (attachment != null)
+						{
+							skeletonSkin.addAttachment (slotIndex, attachment.Name, skeletonAttachment);
+						}
+					}
+				}
+				
+				skeletonData.addSkin (skeletonSkin);
+				if (skeletonSkin.name.Equals ("default"))
+				{
+					skeletonData.setDefaultSkin (skeletonSkin);
+				}
+			}
+		}
+		
+		private Attachment ReadSkeletonAttachment (String name, JToken map, float scale)
+		{
 			string attachmentName = this.Read (map, "name", name);
 
 			var attachmentType = AttachmentType.region;
@@ -122,52 +118,58 @@ namespace Spine.Runtime.MonoGame.Json
 			return attachment;
 		}
 
-		private void ReadSlot (SkeletonData skeletonData, JToken slot)
+		private void ReadSkeletonSlots (SkeletonData skeletonData, JObject data)
 		{
-			String slotName = (String)slot ["name"];
-			String boneName = (String)slot ["bone"];
-			BoneData boneData = skeletonData.findBone (boneName);
-			if (boneData == null)
+			foreach (var slot in data["slots"].Children())
 			{
-				throw new SerializationException ("Slot bone not found: " + boneName);
+				String slotName = (String)slot ["name"];
+				String boneName = (String)slot ["bone"];
+				BoneData boneData = skeletonData.findBone (boneName);
+				if (boneData == null)
+				{
+					throw new SerializationException ("Slot bone not found: " + boneName);
+				}
+
+				SlotData slotData = new SlotData (slotName, boneData);
+				
+				String color = (String)slot ["color"];
+
+				if (color != null)
+				{
+					slotData.color = this.ReadColor (color);
+				}
+
+				slotData.setAttachmentName ((String)slot ["attachment"]);
+				
+				skeletonData.addSlot (slotData);
 			}
-
-			SlotData slotData = new SlotData (slotName, boneData);
-			
-			String color = (String)slot ["color"];
-
-			if (color != null)
-			{
-				slotData.color = this.ReadColor (color);
-			}
-
-			slotData.setAttachmentName ((String)slot ["attachment"]);
-			
-			skeletonData.addSlot (slotData);
 		}
 
-		private void ReadBone (SkeletonData skeletonData, JToken bone, float scale)
+		private void ReadSkeletonBones (SkeletonData skeletonData, JObject data, float scale)
 		{
-			BoneData parent = null;
-			var parentName = (string)bone ["parent"];
-			
-			if (parentName != null)
+			foreach (var bone in data["bones"].Children())
 			{
-				parent = skeletonData.findBone (parentName);
-				if (parent == null)
+				BoneData parent = null;
+				var parentName = (string)bone ["parent"];
+				
+				if (parentName != null)
 				{
-					throw new SerializationException ("Parent bone not found: " + parentName);
+					parent = skeletonData.findBone (parentName);
+					if (parent == null)
+					{
+						throw new SerializationException ("Parent bone not found: " + parentName);
+					}
 				}
-			}
 
-			BoneData boneData = new BoneData ((String)bone ["name"], parent);
-			boneData.length = this.Read<float> (bone, "length", 0) * scale;
-			boneData.x = this.Read<float> (bone, "x", 0) * scale;
-			boneData.y = this.Read<float> (bone, "y", 0) * scale;
-			boneData.rotation = this.Read<float> (bone, "rotation", 0);
-			boneData.scaleX = this.Read<float> (bone, "scaleX", 1);
-			boneData.scaleY = this.Read<float> (bone, "scaleY", 1);
-			skeletonData.addBone (boneData);
+				BoneData boneData = new BoneData ((String)bone ["name"], parent);
+				boneData.length = this.Read<float> (bone, "length", 0) * scale;
+				boneData.x = this.Read<float> (bone, "x", 0) * scale;
+				boneData.y = this.Read<float> (bone, "y", 0) * scale;
+				boneData.rotation = this.Read<float> (bone, "rotation", 0);
+				boneData.scaleX = this.Read<float> (bone, "scaleX", 1);
+				boneData.scaleY = this.Read<float> (bone, "scaleY", 1);
+				skeletonData.addBone (boneData);
+			}
 		}
 	}
 }
