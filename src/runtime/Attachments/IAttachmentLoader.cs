@@ -9,7 +9,7 @@ namespace Spine.Runtime.MonoGame.Attachments
 	public interface IAttachmentLoader
 	{
 		/** @return May be null to not load any attachment. */
-		Attachment newAttachment (AttachmentType type, String name);
+		Attachment NewAttachment (AttachmentType type, String name);
 	}
 }
 

@@ -45,6 +45,7 @@
     <Folder Include="Animation\" />
     <Folder Include="Attachments\" />
     <Folder Include="Json\" />
+    <Folder Include="Graphics\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -73,12 +74,14 @@
     <Compile Include="Attachments\RegionSequenceMode.cs" />
     <Compile Include="Attachments\RegionSequenceModeConvert.cs" />
     <Compile Include="Attachments\TextureAtlasAttachmentLoader.cs" />
-    <Compile Include="Attachments\TextureAtlas.cs" />
     <Compile Include="Attachments\Attachment.cs" />
     <Compile Include="Attachments\IAttachmentLoader.cs" />
     <Compile Include="Json\SkeletonJsonReader.cs" />
     <Compile Include="Json\AnimationJsonReader.cs" />
     <Compile Include="Json\BaseJsonReader.cs" />
+    <Compile Include="Graphics\TextureAtlas.cs" />
+    <Compile Include="Graphics\TextureRegion.cs" />
+    <Compile Include="Json\TextureMapJsonReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">

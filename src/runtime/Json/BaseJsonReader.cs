@@ -2,7 +2,7 @@
 /// BaseJsonReader.cs
 /// 2013-March
 /// </summary>
-namespace Spine.Runtime.MonoGame
+namespace Spine.Runtime.MonoGame.Json
 {	
 	using Microsoft.Xna.Framework;
 

@@ -104,10 +104,6 @@
       <Project>{56F12DED-3931-4F30-8672-880FBC6AE73D}</Project>
       <Name>spine.runtime.monogame.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TexturePacker.Import.iOS\TexturePacker.Import.iOS.csproj">
-      <Project>{76D66CF8-94FA-4224-B0BA-2EBC30998589}</Project>
-      <Name>TexturePacker.Import.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">
       <Project>{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}</Project>
       <Name>MonoGame.Framework.iOS</Name>

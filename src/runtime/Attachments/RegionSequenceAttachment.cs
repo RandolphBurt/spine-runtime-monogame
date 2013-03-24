@@ -7,20 +7,24 @@ namespace Spine.Runtime.MonoGame.Attachments
 	using System;
 	using Microsoft.Xna.Framework.Graphics;
 
-	// TODO
+	/* Not yet implemented.
+	 * Spine does not yet support RegionSequenceAttachment therefore this is not yet implemented
+	 */
 	internal class RegionSequenceAttachment : Attachment
 	{
-		internal RegionSequenceAttachment (String name) : base(name) {
-		}
-
-		public override void draw (SpriteBatch batch, Slot slot)
-		{}
-
-		internal void setFrameTime(float fps)
+		internal RegionSequenceAttachment (String name) : base(name)
 		{
 		}
 
-		internal void setMode(RegionSequenceMode mode)
+		public override void draw (SpriteBatch batch, Slot slot)
+		{
+		}
+
+		internal void setFrameTime (float fps)
+		{
+		}
+
+		internal void setMode (RegionSequenceMode mode)
 		{
 		}
 	}

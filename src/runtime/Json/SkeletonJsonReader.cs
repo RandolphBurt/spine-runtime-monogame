@@ -11,6 +11,7 @@ namespace Spine.Runtime.MonoGame.Json
 	using Newtonsoft.Json.Linq;
 
 	using Spine.Runtime.MonoGame.Attachments;
+	using Spine.Runtime.MonoGame.Graphics;
 
 	public class SkeletonJsonReader : BaseJsonReader
 	{
@@ -85,7 +86,7 @@ namespace Spine.Runtime.MonoGame.Json
 				attachmentType = AttachmentType.regionSequence;
 			}
 
-			Attachment attachment = this.attachmentLoader.newAttachment (attachmentType, attachmentName);
+			Attachment attachment = this.attachmentLoader.NewAttachment (attachmentType, attachmentName);
 			
 			if (attachment is RegionSequenceAttachment)
 			{

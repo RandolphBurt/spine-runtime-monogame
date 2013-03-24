@@ -6,6 +6,8 @@ namespace Spine.Runtime.MonoGame.Attachments
 {
 	using System;
 
+	using Spine.Runtime.MonoGame.Graphics;
+
 	public class TextureAtlasAttachmentLoader : IAttachmentLoader {
 		private TextureAtlas atlas;
 		
@@ -18,31 +20,25 @@ namespace Spine.Runtime.MonoGame.Attachments
 			this.atlas = atlas;
 		}
 		
-		public Attachment newAttachment (AttachmentType attachmentType, String name) {
-			Attachment attachment = null;
+		public Attachment NewAttachment (AttachmentType attachmentType, String name) {
 			switch (attachmentType) {
 				case AttachmentType.region:
-					attachment = new RegionAttachment(name);
-					break;
+					return this.CreateRegionAttachment(name);
 
 				case AttachmentType.regionSequence:
-					attachment = new RegionSequenceAttachment(name);
-					break;
-
+					throw new NotImplementedException("Not yet supported by Spine - Future development required");
+					
 				default:
 					throw new ArgumentException("Unknown attachment type: " + attachmentType);
 			}
-			
-			if (attachment is RegionAttachment) {
-				// TODO
-				/*
-				AtlasRegion region = atlas.findRegion(attachment.getName());
-				if (region == null)
-					throw new RuntimeException("Region not found in atlas: " + attachment + " (" + attachmentType + " attachment: " + name + ")");
-				((RegionAttachment)attachment).setRegion(region);
-				*/
-			}
-			
+		}
+
+		private RegionAttachment CreateRegionAttachment(String name)
+		{
+			var attachment = new RegionAttachment(name);
+
+			attachment.setRegion(atlas[name]);
+
 			return attachment;
 		}
 	}
