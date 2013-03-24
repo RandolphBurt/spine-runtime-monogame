@@ -24,7 +24,6 @@
 	{ "name": "EyeLidLeft", "parent": "EyeLeft", "length": 49.64, "x": 26.18, "y": -7.13, "rotation": 21.1 }
 ],
 "slots": [
-	{ "name": "Crab", "bone": "root", "color": "82e1ff4a", "attachment": "Crab" },
 	{ "name": "BackLowerLegLeft", "bone": "BackLowerLegLeft", "attachment": "BackLowerLegLeft" },
 	{ "name": "BackUpperLefLeft", "bone": "BackUpperLefLeft", "attachment": "BackUpperLegLeft" },
 	{ "name": "BackLowerLefRight", "bone": "BackLowerLefRight", "attachment": "BackLowerLegRight" },
@@ -49,9 +48,6 @@
 ],
 "skins": {
 	"default": {
-		"Crab": {
-			"Crab": { "x": 16.52, "y": 226.41, "width": 546, "height": 452 }
-		},
 		"BackLowerLegLeft": {
 			"BackLowerLegLeft": { "x": 26.46, "y": 1.72, "rotation": 72.91, "width": 36, "height": 69 }
 		},
