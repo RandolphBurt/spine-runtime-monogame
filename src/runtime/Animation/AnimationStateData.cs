@@ -4,27 +4,33 @@ using System.Collections.Generic;
 namespace Spine.Runtime.MonoGame
 {
 	/** Stores mixing times between animations. */
-	public class AnimationStateData {
-		internal readonly Dictionary<Key, float> animationToMixTime = new Dictionary<Key, float>();
-		internal readonly Key tempKey = new Key();
-		
+	public class AnimationStateData
+	{
+		internal readonly Dictionary<Key, float> animationToMixTime = new Dictionary<Key, float> ();
+
 		/** Set the mixing duration between two animations. */
-		public void setMixing (Animation from, Animation to, float duration) {
-			if (from == null) throw new ArgumentException("from cannot be null.");
-			if (to == null) throw new ArgumentException("to cannot be null.");
-			Key key = new Key();
-			key.a1 = from;
-			key.a2 = to;
-			animationToMixTime[key] = duration;
+		public void setMixing (Animation from, Animation to, float duration)
+		{
+			if (from == null)
+			{
+				throw new ArgumentException ("from cannot be null.");
+			}
+			if (to == null)
+			{
+				throw new ArgumentException ("to cannot be null.");
+			}
+
+			Key key = new Key (from, to);
+			this.animationToMixTime [key] = duration;
 		}
 		
-		public float getMixing (Animation from, Animation to) {
-			tempKey.a1 = from;
-			tempKey.a2 = to;
+		public float getMixing (Animation from, Animation to)
+		{
+			Key key = new Key (from, to);
 
-			if (animationToMixTime.ContainsKey(tempKey))
+			if (this.animationToMixTime.ContainsKey (key))
 			{
-				return animationToMixTime[tempKey];
+				return this.animationToMixTime [key];
 			}
 			else
 			{
@@ -32,24 +38,69 @@ namespace Spine.Runtime.MonoGame
 			}
 		}
 		
-		internal class Key {
-			internal Animation a1, a2;
-			
-			public int hashCode () {
-				return 31 * (31 + a1.GetHashCode()) + a2.GetHashCode();
+		internal class Key  : IEquatable<Key>
+		{
+			internal Key (Animation a, Animation b)
+			{
+				this.from = a;
+				this.to = b;
 			}
+
+			private Animation from, to;
 			
-			public bool equals (Object obj) {
-				if (this == obj) return true;
-				if (obj == null) return false;
-				Key other = (Key)obj;
-				if (a1 == null) {
-					if (other.a1 != null) return false;
-				} else if (!a1.Equals(other.a1)) return false;
-				if (a2 == null) {
-					if (other.a2 != null) return false;
-				} else if (!a2.Equals(other.a2)) return false;
+			public override int GetHashCode ()
+			{
+				int fromHashcode = from == null ? 0 : 31 + from.GetHashCode ();
+				int toHashcode = to == null ? 0 : to.GetHashCode ();
+
+				return 31 * fromHashcode + toHashcode;
+			}
+						
+			public bool Equals (Key other)
+			{
+				if (from == null)
+				{
+					if (other.from != null)
+					{
+						return false;
+					}
+				}
+				else
+				if (!from.Equals (other.from))
+					{
+						return false;
+					}
+				if (to == null)
+				{
+					if (other.to != null)
+					{
+						return false;
+					}
+				}
+				else
+				if (!to.Equals (other.to))
+					{
+						return false;
+					}
+
 				return true;
+			}
+
+			public override bool Equals (Object obj)
+			{
+				if (obj == null)
+				{
+					return false;
+				}
+
+				Key other = (Key)obj;
+
+				if (other == null)
+				{
+					return false;
+				}
+
+				return this.Equals (other);
 			}
 		}
 	}

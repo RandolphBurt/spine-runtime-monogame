@@ -7,7 +7,7 @@ namespace Spine.Runtime.MonoGame
 	using System;
 	using System.Collections.Generic;
 
-	public class Animation
+	public class Animation : IEquatable<Animation>
 	{
 		private String name;
 		private readonly List<ITimeline> timelines;
@@ -81,17 +81,63 @@ namespace Spine.Runtime.MonoGame
 
 		
 		/** @return May be null. */
-		public String getName () {
+		public String getName ()
+		{
 			return name;
 		}
 		
 		/** @param name May be null. */
-		public void setName (String name) {
+		public void setName (String name)
+		{
 			this.name = name;
 		}
 		
-		public String toString () {
-			return name != null ? name : base.ToString();
+		public String toString ()
+		{
+			return name ?? base.ToString ();
+		}
+
+		public override int GetHashCode ()
+		{
+			if (this.name != null)
+			{
+				return this.name.GetHashCode () + this.duration.GetHashCode();
+			}
+			else
+			{
+				return this.duration.GetHashCode();
+			}
+		}
+
+		public bool Equals (Animation other)
+		{
+			if (this.name == null && other.name == null)
+			{
+				return true;
+			}
+
+			if (this.name == null || other.name == null)
+			{
+				return false;
+			}
+
+			return String.Compare (this.name, other.name) == 0;
+		}
+
+		public override bool Equals (Object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+
+			Animation other = obj as Animation;
+			if (other == null)
+			{
+				return false;
+			}
+
+			return this.Equals (other);
 		}
 	}
 }

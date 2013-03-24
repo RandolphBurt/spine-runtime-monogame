@@ -12,7 +12,6 @@ namespace Spine.Runtime.MonoGame
 	/** Stores attachments by slot index and attachment name. */
 	public class Skin
 	{
-		static private readonly Key lookup = new Key ();
 		internal readonly String name;
 		private readonly Dictionary<Key, Attachment> attachments = new Dictionary<Key, Attachment> ();
 		
@@ -31,15 +30,14 @@ namespace Spine.Runtime.MonoGame
 			{
 				throw new ArgumentException ("attachment cannot be null.");
 			}
-			Key key = new Key ();
-			key.set (slotIndex, name);
+			Key key = new Key (slotIndex, name);
 			attachments [key] = attachment;
 		}
 		
 		/** @return May be null. */
 		public Attachment getAttachment (int slotIndex, String name)
 		{
-			lookup.set (slotIndex, name);
+			Key lookup = new Key (slotIndex, name);
 
 			Attachment matchedAttachment;
 			return attachments.TryGetValue (lookup, out matchedAttachment) ? matchedAttachment : null;
@@ -92,47 +90,57 @@ namespace Spine.Runtime.MonoGame
 			return name;
 		}
 		
-		private class Key
+		private class Key : IEquatable<Key>
 		{
-			internal int slotIndex;
-			internal String name;
-			private int hashCode;
-			
-			public void set (int slotName, String name)
+			internal int slotIndex
+			{
+				get;
+				private set;
+			}
+
+			internal String name {
+				get;
+				private set;
+			}
+
+			public Key(int slotIndex, String name)
 			{
 				if (name == null)
 				{
 					throw new ArgumentException ("attachmentName cannot be null.");
 				}
-				this.slotIndex = slotName;
+				
+				this.slotIndex = slotIndex;
 				this.name = name;
-				hashCode = 31 * (31 + name.GetHashCode ()) + slotIndex;
 			}
-			
-			public int HashCode ()
+
+			public override int GetHashCode ()
 			{
-				return hashCode;
+				return 31 * (31 + name.GetHashCode ()) + slotIndex;
 			}
-			
-			public bool equals (Object obj)
+
+			public bool Equals(Key other)
+			{
+				return slotIndex == other.slotIndex && name.Equals (other.name);
+			}
+
+			public override bool Equals (Object obj)
 			{
 				if (obj == null)
 				{
 					return false;
 				}
+
 				Key other = (Key)obj;
-				if (slotIndex != other.slotIndex)
+				if (other == null)
 				{
 					return false;
 				}
-				if (!name.Equals (other.name))
-				{
-					return false;
-				}
-				return true;
+
+				return this.Equals(other);
 			}
 			
-			public String toString ()
+			public override String ToString ()
 			{
 				return slotIndex + ":" + name;
 			}
