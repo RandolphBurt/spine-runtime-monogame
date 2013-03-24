@@ -119,11 +119,11 @@ namespace Spine.Runtime.MonoGame
 		
 		public void draw (SpriteBatch batch)
 		{
-			foreach (var drawOrder in this.drawOrder)
+			foreach (var drawOrderItem in this.drawOrder)
 			{
-				if (drawOrder.attachment != null)
+				if (drawOrderItem.attachment != null)
 				{
-					drawOrder.attachment.draw (batch, drawOrder);
+					drawOrderItem.attachment.draw (batch, drawOrderItem);
 				}
 			}
 		}
