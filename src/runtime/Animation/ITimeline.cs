@@ -8,12 +8,12 @@ namespace Spine.Runtime.MonoGame
 	public interface ITimeline
 	{
 		/** Returns the time in seconds of the last keyframe. */
-		float getDuration ();
+		float GetDuration ();
 		
-		int getKeyframeCount ();
+		int GetKeyframeCount ();
 		
 		/** Sets the value(s) for the specified time. */
-		void apply (Skeleton skeleton, float time, float alpha);
+		void Apply (Skeleton skeleton, float time, float alpha);
 	}
 }
 

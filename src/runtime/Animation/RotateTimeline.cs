@@ -18,40 +18,30 @@ namespace Spine.Runtime.MonoGame
 			this.frames = new float[keyframeCount * 2];
 		}
 		
-		public float getDuration ()
+		public float GetDuration ()
 		{
 			return frames [frames.Length - 2];
 		}
 		
-		public int getKeyframeCount ()
+		public int GetKeyframeCount ()
 		{
 			return frames.Length / 2;
 		}
-		
-		public void setBoneIndex (int boneIndex)
+
+		public void SetBoneIndex(int index)
 		{
-			this.boneIndex = boneIndex;
-		}
-		
-		public int getBoneIndex ()
-		{
-			return boneIndex;
-		}
-		
-		public float[] getKeyframes ()
-		{
-			return frames;
+			this.boneIndex = index;
 		}
 		
 		/** Sets the time and value of the specified keyframe. */
-		public void setKeyframe (int keyframeIndex, float time, float value)
+		public void SetKeyframe (int keyframeIndex, float time, float value)
 		{
 			keyframeIndex *= 2;
 			frames [keyframeIndex] = time;
 			frames [keyframeIndex + 1] = value;
 		}
 		
-		public void apply (Skeleton skeleton, float time, float alpha)
+		public void Apply (Skeleton skeleton, float time, float alpha)
 		{
 			float[] frames = this.frames;
 			if (time < frames [0])
@@ -63,7 +53,7 @@ namespace Spine.Runtime.MonoGame
 			
 			if (time >= frames [frames.Length - 2])
 			{ // Time is after last frame.
-				float rotationAmount = bone.data.rotation + frames [frames.Length - 1] - bone.rotation;
+				float rotationAmount = bone.Data.Rotation + frames [frames.Length - 1] - bone.rotation;
 				while (rotationAmount > 180)
 				{
 					rotationAmount -= 360;
@@ -83,7 +73,7 @@ namespace Spine.Runtime.MonoGame
 			float lastFrameValue = frames [frameIndex - 1];
 			float frameTime = frames [frameIndex];
 			float percent = MathUtils.Clamp (1 - (time - frameTime) / (frames [frameIndex + LAST_FRAME_TIME] - frameTime), 0, 1);
-			percent = getCurvePercent (frameIndex / 2 - 1, percent);
+			percent = GetCurvePercent (frameIndex / 2 - 1, percent);
 			
 			float amount = frames [frameIndex + FRAME_VALUE] - lastFrameValue;
 			while (amount > 180)
@@ -96,7 +86,7 @@ namespace Spine.Runtime.MonoGame
 				amount += 360;
 			}
 
-			amount = bone.data.rotation + (lastFrameValue + amount * percent) - bone.rotation;
+			amount = bone.Data.Rotation + (lastFrameValue + amount * percent) - bone.rotation;
 			while (amount > 180)
 			{
 				amount -= 360;

@@ -17,12 +17,12 @@ namespace Spine.Runtime.MonoGame
 			curves = new float[(keyframeCount - 1) * 6];
 		}
 			
-		public void setLinear (int keyframeIndex)
+		public void SetLinear (int keyframeIndex)
 		{
 			curves [keyframeIndex * 6] = LINEAR;
 		}
 			
-		public void setStepped (int keyframeIndex)
+		public void SetStepped (int keyframeIndex)
 		{
 			curves [keyframeIndex * 6] = STEPPED;
 		}
@@ -30,7 +30,7 @@ namespace Spine.Runtime.MonoGame
 		/** Sets the control handle positions for an interpolation bezier curve used to transition from this keyframe to the next.
 		 * cx1 and cx2 are from 0 to 1, representing the percent of time between the two keyframes. cy1 and cy2 are the percent of
 		 * the difference between the keyframe's values. */
-		public void setCurve (int keyframeIndex, float cx1, float cy1, float cx2, float cy2)
+		public void SetCurve (int keyframeIndex, float cx1, float cy1, float cx2, float cy2)
 		{
 			float subdiv_step = 1f / BEZIER_SEGMENTS;
 			float subdiv_step2 = subdiv_step * subdiv_step;
@@ -44,28 +44,30 @@ namespace Spine.Runtime.MonoGame
 			float tmp2x = (cx1 - cx2) * 3 + 1;
 			float tmp2y = (cy1 - cy2) * 3 + 1;
 			int i = keyframeIndex * 6;
-			float[] curves = this.curves;
-			curves [i] = cx1 * pre1 + tmp1x * pre2 + tmp2x * subdiv_step3;
-			curves [i + 1] = cy1 * pre1 + tmp1y * pre2 + tmp2y * subdiv_step3;
-			curves [i + 2] = tmp1x * pre4 + tmp2x * pre5;
-			curves [i + 3] = tmp1y * pre4 + tmp2y * pre5;
-			curves [i + 4] = tmp2x * pre5;
-			curves [i + 5] = tmp2y * pre5;
+			this.curves [i] = cx1 * pre1 + tmp1x * pre2 + tmp2x * subdiv_step3;
+			this.curves [i + 1] = cy1 * pre1 + tmp1y * pre2 + tmp2y * subdiv_step3;
+			this.curves [i + 2] = tmp1x * pre4 + tmp2x * pre5;
+			this.curves [i + 3] = tmp1y * pre4 + tmp2y * pre5;
+			this.curves [i + 4] = tmp2x * pre5;
+			this.curves [i + 5] = tmp2y * pre5;
 		}
 			
-		public float getCurvePercent (int keyframeIndex, float percent)
+		public float GetCurvePercent (int keyframeIndex, float percent)
 		{
 			int curveIndex = keyframeIndex * 6;
 			float[] curves = this.curves;
 			float dfx = curves [curveIndex];
+
 			if (dfx == LINEAR)
 			{
 				return percent;
 			}
+
 			if (dfx == STEPPED)
 			{
 				return 0;
 			}
+
 			float dfy = curves [curveIndex + 1];
 			float ddfx = curves [curveIndex + 2];
 			float ddfy = curves [curveIndex + 3];
@@ -73,6 +75,7 @@ namespace Spine.Runtime.MonoGame
 			float dddfy = curves [curveIndex + 5];
 			float x = dfx, y = dfy;
 			int i = BEZIER_SEGMENTS - 2;
+
 			while (true)
 			{
 				if (x >= percent)
@@ -93,6 +96,7 @@ namespace Spine.Runtime.MonoGame
 				x += dfx;
 				y += dfy;
 			}
+
 			return y + (1 - y) * (percent - x) / (1 - x); // Last point is 1,1.
 		}
 	}

@@ -29,8 +29,7 @@ namespace Spine.Runtime.MonoGame.Json
 
 		public Skeleton ReadSkeletonJsonFile (string jsonFile, float scale = 1)
 		{
-			SkeletonData skeletonData = new SkeletonData ();
-			skeletonData.setName (Path.GetFileNameWithoutExtension (jsonFile));
+			SkeletonData skeletonData = new SkeletonData (Path.GetFileNameWithoutExtension (jsonFile));
 
 			var jsonText = File.ReadAllText (jsonFile);
 			JObject data = JObject.Parse (jsonText);
@@ -39,9 +38,9 @@ namespace Spine.Runtime.MonoGame.Json
 			this.ReadSkeletonSlots (skeletonData, data);
 			this.ReadSkeletonSkins (skeletonData, data, scale);
 
-			skeletonData.bones.TrimExcess ();
-			skeletonData.slots.TrimExcess ();
-			skeletonData.skins.TrimExcess ();
+			skeletonData.Bones.TrimExcess ();
+			skeletonData.Slots.TrimExcess ();
+			skeletonData.Skins.TrimExcess ();
 
 			return new Skeleton (skeletonData);
 		}
@@ -54,22 +53,22 @@ namespace Spine.Runtime.MonoGame.Json
 				
 				foreach (JProperty slot in skin.Value)
 				{
-					int slotIndex = skeletonData.findSlotIndex (slot.Name);
+					int slotIndex = skeletonData.FindSlotIndex (slot.Name);
 					
 					foreach (JProperty attachment in slot.Value)
 					{
 						Attachment skeletonAttachment = this.ReadSkeletonAttachment (attachment.Name, attachment.Value, scale);
 						if (attachment != null)
 						{
-							skeletonSkin.addAttachment (slotIndex, attachment.Name, skeletonAttachment);
+							skeletonSkin.AddAttachment (slotIndex, attachment.Name, skeletonAttachment);
 						}
 					}
 				}
 				
-				skeletonData.addSkin (skeletonSkin);
-				if (skeletonSkin.name.Equals ("default"))
+				skeletonData.AddSkin (skeletonSkin);
+				if (skeletonSkin.Name.Equals ("default"))
 				{
-					skeletonData.setDefaultSkin (skeletonSkin);
+					skeletonData.DefaultSkin = skeletonSkin;
 				}
 			}
 		}
@@ -98,22 +97,21 @@ namespace Spine.Runtime.MonoGame.Json
 					throw new SerializationException ("Region sequence attachment missing fps: " + attachmentName);
 				}
 
-				regionSequenceAttachment.setFrameTime ((float)fps);
+				regionSequenceAttachment.SetFrameTime ((float)fps);
 				
-				regionSequenceAttachment.setMode (RegionSequenceModeConvert.FromString ((String)map ["mode"]));
+				regionSequenceAttachment.SetMode (RegionSequenceModeConvert.FromString ((String)map ["mode"]));
 			}
 			
 			if (attachment is RegionAttachment)
 			{
 				RegionAttachment regionAttachment = (RegionAttachment)attachment;
-				regionAttachment.setX (this.Read<float> (map, "x", 0) * scale);
-				regionAttachment.setY (this.Read<float> (map, "y", 0) * scale);
-				regionAttachment.setScaleX (this.Read<float> (map, "scaleX", 1));
-				regionAttachment.setScaleY (this.Read<float> (map, "scaleY", 1));
-				regionAttachment.setRotation (this.Read<float> (map, "rotation", 0));
-				regionAttachment.setWidth (this.Read<float> (map, "width", 32) * scale);
-				regionAttachment.setHeight (this.Read<float> (map, "height", 32) * scale);
-				regionAttachment.updateOffset ();
+				regionAttachment.X = this.Read<float> (map, "x", 0) * scale;
+				regionAttachment.Y = this.Read<float> (map, "y", 0) * scale;
+				regionAttachment.ScaleX = this.Read<float> (map, "scaleX", 1);
+				regionAttachment.ScaleY = this.Read<float> (map, "scaleY", 1);
+				regionAttachment.Rotation = this.Read<float> (map, "rotation", 0);
+				regionAttachment.Width = this.Read<float> (map, "width", 32) * scale;
+				regionAttachment.Height = this.Read<float> (map, "height", 32) * scale;
 			}
 			
 			return attachment;
@@ -125,7 +123,7 @@ namespace Spine.Runtime.MonoGame.Json
 			{
 				String slotName = (String)slot ["name"];
 				String boneName = (String)slot ["bone"];
-				BoneData boneData = skeletonData.findBone (boneName);
+				BoneData boneData = skeletonData.FindBone (boneName);
 				if (boneData == null)
 				{
 					throw new SerializationException ("Slot bone not found: " + boneName);
@@ -137,12 +135,12 @@ namespace Spine.Runtime.MonoGame.Json
 
 				if (color != null)
 				{
-					slotData.color = this.ReadColor (color);
+					slotData.Color = this.ReadColor (color);
 				}
 
-				slotData.setAttachmentName ((String)slot ["attachment"]);
+				slotData.AttachmentName = (String)slot ["attachment"];
 				
-				skeletonData.addSlot (slotData);
+				skeletonData.AddSlot (slotData);
 			}
 		}
 
@@ -155,7 +153,7 @@ namespace Spine.Runtime.MonoGame.Json
 				
 				if (parentName != null)
 				{
-					parent = skeletonData.findBone (parentName);
+					parent = skeletonData.FindBone (parentName);
 					if (parent == null)
 					{
 						throw new SerializationException ("Parent bone not found: " + parentName);
@@ -163,13 +161,13 @@ namespace Spine.Runtime.MonoGame.Json
 				}
 
 				BoneData boneData = new BoneData ((String)bone ["name"], parent);
-				boneData.length = this.Read<float> (bone, "length", 0) * scale;
-				boneData.x = this.Read<float> (bone, "x", 0) * scale;
-				boneData.y = this.Read<float> (bone, "y", 0) * scale;
-				boneData.rotation = this.Read<float> (bone, "rotation", 0);
-				boneData.scaleX = this.Read<float> (bone, "scaleX", 1);
-				boneData.scaleY = this.Read<float> (bone, "scaleY", 1);
-				skeletonData.addBone (boneData);
+				boneData.Length = this.Read<float> (bone, "length", 0) * scale;
+				boneData.X = this.Read<float> (bone, "x", 0) * scale;
+				boneData.Y = this.Read<float> (bone, "y", 0) * scale;
+				boneData.Rotation = this.Read<float> (bone, "rotation", 0);
+				boneData.ScaleX = this.Read<float> (bone, "scaleX", 1);
+				boneData.ScaleY = this.Read<float> (bone, "scaleY", 1);
+				skeletonData.AddBone (boneData);
 			}
 		}
 	}

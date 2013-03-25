@@ -9,15 +9,36 @@ namespace Spine.Runtime.MonoGame
 
 	public class SlotData
 	{
-		internal readonly String name;
-		internal readonly BoneData boneData;
-		internal Color color = new Color (1, 1, 1, 1);
-		internal String attachmentName;
-		
-		SlotData ()
+		private Color color = new Color (1, 1, 1, 1);
+
+		public String Name
 		{
-			name = null;
-			boneData = null;
+			get;
+			set;
+		}
+
+		public BoneData BoneData {
+			get;
+			set;
+		}
+
+		public Color Color 
+		{
+			get
+			{
+				return this.color;
+			}
+
+			set
+			{
+				this.color = value;
+			}
+		}
+
+		public String AttachmentName
+		{
+			get;
+			set;
 		}
 		
 		public SlotData (String name, BoneData boneData)
@@ -32,40 +53,8 @@ namespace Spine.Runtime.MonoGame
 				throw new ArgumentException ("boneData cannot be null.");
 			}
 
-			this.name = name;
-			this.boneData = boneData;
-		}
-		
-		public String getName ()
-		{
-			return name;
-		}
-		
-		public BoneData getBoneData ()
-		{
-			return boneData;
-		}
-		
-		public Color getColor ()
-		{
-			return color;
-		}
-		
-		/** @param attachmentName May be null. */
-		public void setAttachmentName (String attachmentName)
-		{
-			this.attachmentName = attachmentName;
-		}
-		
-		/** @return May be null. */
-		public String getAttachmentName ()
-		{
-			return attachmentName;
-		}
-		
-		public String toString ()
-		{
-			return name;
+			this.Name = name;
+			this.BoneData = boneData;
 		}
 	}
 }

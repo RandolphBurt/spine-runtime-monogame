@@ -14,7 +14,7 @@ namespace Spine.Runtime.MonoGame
 		private const int FRAME_G = 2;
 		private const int FRAME_B = 3;
 		private const int FRAME_A = 4;
-		private int slotIndex;
+		private int slotIndex = -1;
 		private readonly float[] frames; // time, r, g, b, a, ...
 		
 		public ColorTimeline (int keyframeCount) :base (keyframeCount)
@@ -22,33 +22,23 @@ namespace Spine.Runtime.MonoGame
 			this.frames = new float[keyframeCount * 5];
 		}
 		
-		public float getDuration ()
+		public float GetDuration ()
 		{
 			return this.frames [frames.Length - 5];
 		}
 		
-		public int getKeyframeCount ()
+		public int GetKeyframeCount ()
 		{
 			return this.frames.Length / 5;
 		}
-		
-		public void setSlotIndex (int slotIndex)
+
+		public void SetSlotIndex(int index)
 		{
-			this.slotIndex = slotIndex;
+			this.slotIndex = index;
 		}
-		
-		public int getSlotIndex ()
-		{
-			return slotIndex;
-		}
-		
-		public float[] getKeyframes ()
-		{
-			return this.frames;
-		}
-		
+
 		/** Sets the time and value of the specified keyframe. */
-		public void setKeyframe (int keyframeIndex, float time, float r, float g, float b, float a)
+		public void SetKeyframe (int keyframeIndex, float time, float r, float g, float b, float a)
 		{
 			keyframeIndex *= 5;
 			this.frames [keyframeIndex] = time;
@@ -58,23 +48,22 @@ namespace Spine.Runtime.MonoGame
 			this.frames [keyframeIndex + 4] = a;
 		}
 		
-		public void apply (Skeleton skeleton, float time, float alpha)
+		public void Apply (Skeleton skeleton, float time, float alpha)
 		{
-			float[] frames = this.frames;
-			if (time < frames [0])
+			if (time < this.frames [0])
 			{
 				return;
 			} // Time is before first frame.
 			
-			Color color = skeleton.slots [slotIndex].color;
+			Color color = skeleton.slots [this.slotIndex].Color;
 			
 			if (time >= frames [frames.Length - 5])
 			{ // Time is after last frame.
-				int i = frames.Length - 1;
-				float colorRed = frames [i - 3];
-				float colorGreen = frames [i - 2];
-				float colorBlue = frames [i - 1];
-				float colorAlpha = frames [i];
+				int i = this.frames.Length - 1;
+				float colorRed = this.frames [i - 3];
+				float colorGreen = this.frames [i - 2];
+				float colorBlue = this.frames [i - 1];
+				float colorAlpha = this.frames [i];
 				color = new Color (colorRed, colorGreen, colorBlue, colorAlpha);
 				return;
 			}
@@ -87,7 +76,7 @@ namespace Spine.Runtime.MonoGame
 			float lastFrameA = this.frames [frameIndex - 1];
 			float frameTime = this.frames [frameIndex];
 			float percent = MathUtils.Clamp (1 - (time - frameTime) / (frames [frameIndex + LAST_FRAME_TIME] - frameTime), 0, 1);
-			percent = getCurvePercent (frameIndex / 5 - 1, percent);
+			percent = GetCurvePercent (frameIndex / 5 - 1, percent);
 			
 			float r = lastFrameR + (frames [frameIndex + FRAME_R] - lastFrameR) * percent;
 			float g = lastFrameG + (frames [frameIndex + FRAME_G] - lastFrameG) * percent;

@@ -55,14 +55,16 @@ namespace Demo
 			this.skeleton = skeletonReader.ReadSkeletonJsonFile("Content/skeleton-skeleton.json");
 
 			var animationReader= new AnimationJsonReader();
-			this.animationWalk = animationReader.ReadAnimationJsonFile("Content/skeleton-WalkLeft.json", skeleton.getData());
-			this.animationJump = animationReader.ReadAnimationJsonFile("Content/skeleton-Jump.json", skeleton.getData());
+			this.animationWalk = animationReader.ReadAnimationJsonFile("Content/skeleton-WalkLeft.json", skeleton.Data);
+			this.animationJump = animationReader.ReadAnimationJsonFile("Content/skeleton-Jump.json", skeleton.Data);
 
-			Bone root = skeleton.getRootBone();
-			root.setX(500);
-			root.setY(150);
-			
-			skeleton.updateWorldTransform();
+			// TODO - No idea why I have to specify a negative number to make it appear on screen! 
+			// Probably a bug somewhere.
+			Bone root = skeleton.GetRootBone();
+			root.X = 500;
+			root.Y = -700;
+		
+			skeleton.UpdateWorldTransform();
 
 			base.LoadContent ();
 		}
@@ -77,11 +79,11 @@ namespace Demo
 
 			// this.spriteBatch.Draw (this.textureMaps [0], new Vector2 (0, 0), Color.White);
 
-			this.animationWalk.apply(this.skeleton, timer++ / 100, true);
-			// this.animationJump.apply(this.skeleton, timer++ / 100, true);
+			this.animationWalk.Apply(this.skeleton, timer++ / 100, true);
+			// this.animationJump.Apply(this.skeleton, timer++ / 100, true);
 
-			this.skeleton.updateWorldTransform();
-			this.skeleton.draw(this.spriteBatch);
+			this.skeleton.UpdateWorldTransform();
+			this.skeleton.Draw(this.spriteBatch);
 
 			this.spriteBatch.End ();
 

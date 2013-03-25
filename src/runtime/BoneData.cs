@@ -7,14 +7,6 @@ namespace Spine.Runtime.MonoGame
 
 	public class BoneData
 	{
-		internal readonly BoneData parent;
-		internal readonly String name;
-		internal float length;
-		internal float x, y;
-		internal float rotation;
-		internal float scaleX = 1, scaleY = 1;
-			
-		/** @param parent May be null. */
 		public BoneData (String name, BoneData parent)
 		{
 			if (name == null)
@@ -22,104 +14,59 @@ namespace Spine.Runtime.MonoGame
 				throw new ArgumentException ("name cannot be null.");
 			}
 
-			this.name = name;
-			this.parent = parent;
+			this.Name = name;
+			this.Parent = parent;
+			this.ScaleX = 1;
+			this.ScaleY = 1;
 		}
-			
-		/** Copy constructor.
-	 * @param parent May be null. */
-		public BoneData (BoneData bone, BoneData parent)
-		{
-			if (bone == null)
-			{
-				throw new ArgumentException ("bone cannot be null.");
-			}
 
-			this.parent = parent;
-			name = bone.name;
-			length = bone.length;
-			x = bone.x;
-			y = bone.y;
-			rotation = bone.rotation;
-			scaleX = bone.scaleX;
-			scaleY = bone.scaleY;
-		}
-			
-		/** @return May be null. */
-		public BoneData getParent ()
+		public BoneData Parent
 		{
-			return parent;
+			get;
+			private set;
 		}
-			
-		public String getName ()
+
+		public string Name
 		{
-			return name;
+			get;
+			private set;
 		}
-			
-		public float getLength ()
+
+		public  float Length
 		{
-			return length;
+			get;
+			set;
 		}
-			
-		public void setLength (float length)
+
+		public  float Rotation
 		{
-			this.length = length;
+			get;
+			set;
 		}
-			
-		public float getX ()
+
+		public float X{
+			get;
+			set;
+		}
+		
+		public float Y
 		{
-			return x;
+			get;
+			set;
 		}
-			
-		public void setX (float x)
+		
+		public float ScaleX
 		{
-			this.x = x;
+			get;
+			set;
 		}
-			
-		public float getY ()
+		
+		public float ScaleY
 		{
-			return y;
+			get;
+			set;
 		}
-			
-		public void setY (float y)
-		{
-			this.y = y;
-		}
-			
-		public float getRotation ()
-		{
-			return rotation;
-		}
-			
-		public void setRotation (float rotation)
-		{
-			this.rotation = rotation;
-		}
-			
-		public float getScaleX ()
-		{
-			return scaleX;
-		}
-			
-		public void setScaleX (float scaleX)
-		{
-			this.scaleX = scaleX;
-		}
-			
-		public float getScaleY ()
-		{
-			return scaleY;
-		}
-			
-		public void setScaleY (float scaleY)
-		{
-			this.scaleY = scaleY;
-		}
-			
-		public String toString ()
-		{
-			return name;
-		}
+
 	}	
 }
 

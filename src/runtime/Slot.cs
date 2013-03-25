@@ -11,21 +11,10 @@ namespace Spine.Runtime.MonoGame
 
 	public class Slot
 	{
-		internal readonly SlotData data;
-		internal readonly Bone bone;
-		private readonly Skeleton skeleton;
-		internal Color color;
-		internal Attachment attachment;
+		private Attachment attachment;
+		
 		private float attachmentTime;
-		
-		Slot ()
-		{
-			data = null;
-			bone = null;
-			skeleton = null;
-			color = new Color (1, 1, 1, 1);
-		}
-		
+
 		public Slot (SlotData data, Skeleton skeleton, Bone bone)
 		{
 			if (data == null)
@@ -40,11 +29,48 @@ namespace Spine.Runtime.MonoGame
 			{
 				throw new ArgumentException ("bone cannot be null.");
 			}
-			this.data = data;
-			this.skeleton = skeleton;
-			this.bone = bone;
-			color = new Color (1, 1, 1, 1);
-			setToBindPose ();
+			this.Data = data;
+			this.Skeleton = skeleton;
+			this.Bone = bone;
+			this.Color = new Color (1, 1, 1, 1);
+			this.SetToBindPose ();
+		}
+
+		public SlotData Data 
+		{
+			get;
+			set;
+		}
+		
+		public  Bone Bone
+		{
+			get;
+			set;
+		}
+		
+		public Skeleton Skeleton
+		{
+			get;
+			set;
+		}
+		
+		public Color Color
+		{
+			get;
+			set;
+		}
+		
+		public Attachment Attachment
+		{
+			get
+			{
+				return this.attachment;
+			}
+			
+			private set
+			{
+				this.attachment = value;
+			}
 		}
 		
 		/** Copy constructor. */
@@ -62,73 +88,40 @@ namespace Spine.Runtime.MonoGame
 			{
 				throw new ArgumentException ("bone cannot be null.");
 			}
-			data = slot.data;
-			this.skeleton = skeleton;
-			this.bone = bone;
-			color = slot.color;
+
+			Data = slot.Data;
+			this.Skeleton = skeleton;
+			this.Bone = bone;
+			Color = slot.Color;
 			attachment = slot.attachment;
 			attachmentTime = slot.attachmentTime;
 		}
 		
-		public SlotData getData ()
-		{
-			return data;
-		}
-		
-		public Skeleton getSkeleton ()
-		{
-			return skeleton;
-		}
-		
-		public Bone getBone ()
-		{
-			return bone;
-		}
-		
-		public Color getColor ()
-		{
-			return color;
-		}
-		
-		/** @return May be null. */
-		public Attachment getAttachment ()
-		{
-			return attachment;
-		}
-		
 		/** Sets the attachment and resets {@link #getAttachmentTime()}.
 	 * @param attachment May be null. */
-		public void setAttachment (Attachment attachment)
+		public void SetAttachment (Attachment attachment)
 		{
-			this.attachment = attachment;
-			attachmentTime = skeleton.time;
+			// TODO - compare with corona
+			this.Attachment = attachment;
+			this.attachmentTime = this.Skeleton.time;
 		}
 		
-		public void setAttachmentTime (float time)
+		public void SetAttachmentTime (float time)
 		{
-			attachmentTime = skeleton.time - time;
+			this.attachmentTime = this.Skeleton.time - time;
 		}
 		
 		/** Returns the time since the attachment was set. */
-		public float getAttachmentTime ()
+		public float GetAttachmentTime ()
 		{
-			return skeleton.time - attachmentTime;
+			return this.Skeleton.time - this.attachmentTime;
 		}
 		
-		internal void setToBindPose (int slotIndex)
+		public void SetToBindPose ()
 		{
-			color = data.color;
-			setAttachment (data.attachmentName == null ? null : skeleton.getAttachment (slotIndex, data.attachmentName));
-		}
-		
-		public void setToBindPose ()
-		{
-			setToBindPose (skeleton.data.slots.IndexOf (data));
-		}
-		
-		public String toString ()
-		{
-			return data.name;
+			this.Color = Data.Color;
+
+			this.SetAttachment (Data.AttachmentName == null ? null : this.Skeleton.GetAttachment (this.Data.Name, this.Data.AttachmentName));
 		}
 	}
 }

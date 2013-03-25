@@ -16,15 +16,15 @@ namespace Spine.Runtime.MonoGame.Attachments
 		{
 		}
 
-		public override void draw (SpriteBatch batch, Slot slot)
+		public override void Draw (SpriteBatch batch, Slot slot)
 		{
 		}
 
-		internal void setFrameTime (float fps)
+		internal void SetFrameTime (float fps)
 		{
 		}
 
-		internal void setMode (RegionSequenceMode mode)
+		internal void SetMode (RegionSequenceMode mode)
 		{
 		}
 	}

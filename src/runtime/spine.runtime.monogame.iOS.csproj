@@ -67,8 +67,6 @@
     <Compile Include="Utils\SearchUtils.cs" />
     <Compile Include="Animation\ColorTimeline.cs" />
     <Compile Include="Animation\AttachmentTimeline.cs" />
-    <Compile Include="Animation\AnimationState.cs" />
-    <Compile Include="Animation\AnimationStateData.cs" />
     <Compile Include="Attachments\RegionAttachment.cs" />
     <Compile Include="Attachments\RegionSequenceAttachment.cs" />
     <Compile Include="Attachments\RegionSequenceMode.cs" />

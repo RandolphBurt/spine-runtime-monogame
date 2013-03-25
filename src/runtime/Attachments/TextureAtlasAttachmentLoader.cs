@@ -35,11 +35,7 @@ namespace Spine.Runtime.MonoGame.Attachments
 
 		private RegionAttachment CreateRegionAttachment(String name)
 		{
-			var attachment = new RegionAttachment(name);
-
-			attachment.setRegion(atlas[name]);
-
-			return attachment;
+			return new RegionAttachment(name, atlas[name]);
 		}
 	}
 }

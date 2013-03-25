@@ -10,8 +10,6 @@ namespace Spine.Runtime.MonoGame.Attachments
 
 	public abstract class Attachment
 	{
-		internal readonly String name;
-		
 		public Attachment (String name)
 		{
 			if (name == null)
@@ -20,20 +18,16 @@ namespace Spine.Runtime.MonoGame.Attachments
 				throw new ArgumentException ("name cannot be null.");
 			}
 
-			this.name = name;
+			this.Name = name;
 		}
-		
-		public abstract void draw (SpriteBatch batch, Slot slot);
-		
-		public String getName ()
+	
+		public String Name
 		{
-			return name;
+			get;
+			private set;
 		}
-		
-		public String toString ()
-		{
-			return name;
-		}
+
+		public abstract void Draw (SpriteBatch batch, Slot slot);
 	}
 }
 

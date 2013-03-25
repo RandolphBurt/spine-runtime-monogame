@@ -12,30 +12,37 @@ namespace Spine.Runtime.MonoGame
 	/** Stores attachments by slot index and attachment name. */
 	public class Skin
 	{
-		internal readonly String name;
 		private readonly Dictionary<Key, Attachment> attachments = new Dictionary<Key, Attachment> ();
 		
+		public String Name
+		{
+			get;
+			private set;
+		}
+
 		public Skin (String name)
 		{
 			if (name == null)
 			{
 				throw new ArgumentException ("name cannot be null.");
 			}
-			this.name = name;
+
+			this.Name = name;
 		}
 		
-		public void addAttachment (int slotIndex, String name, Attachment attachment)
+		public void AddAttachment (int slotIndex, String name, Attachment attachment)
 		{
 			if (attachment == null)
 			{
 				throw new ArgumentException ("attachment cannot be null.");
 			}
+
 			Key key = new Key (slotIndex, name);
 			attachments [key] = attachment;
 		}
 		
 		/** @return May be null. */
-		public Attachment getAttachment (int slotIndex, String name)
+		public Attachment GetAttachment (int slotIndex, String name)
 		{
 			Key lookup = new Key (slotIndex, name);
 
@@ -43,7 +50,7 @@ namespace Spine.Runtime.MonoGame
 			return attachments.TryGetValue (lookup, out matchedAttachment) ? matchedAttachment : null;
 		}
 		
-		public void findNamesForSlot (int slotIndex, List<String> names)
+		public void FindNamesForSlot (int slotIndex, ICollection<string> names)
 		{
 			if (names == null)
 			{
@@ -59,7 +66,7 @@ namespace Spine.Runtime.MonoGame
 			}
 		}
 		
-		public void findAttachmentsForSlot (int slotIndex, List<Attachment> attachmentList)
+		public void FindAttachmentsForSlot (int slotIndex, ICollection<Attachment> attachmentList)
 		{
 			if (attachments == null)
 			{
@@ -74,20 +81,23 @@ namespace Spine.Runtime.MonoGame
 				}
 			}
 		}
-		
-		public void clear ()
+
+		/** Attach all attachments from this skin if the corresponding attachment from the old skin is currently attached. */
+		public void AttachAll (Skeleton skeleton, Skin oldSkin)
 		{
-			attachments.Clear ();
-		}
-		
-		public String getName ()
-		{
-			return name;
-		}
-		
-		public String toString ()
-		{
-			return name;
+			foreach (var entry in attachments)
+			{
+				int slotIndex = entry.Key.slotIndex;
+				Slot slot = skeleton.slots [slotIndex];
+				if (slot.Attachment == entry.Value)
+				{
+					Attachment attachment = GetAttachment (slotIndex, entry.Key.name);
+					if (attachment != null)
+					{
+						slot.SetAttachment (attachment);
+					}
+				}
+			}
 		}
 		
 		private class Key : IEquatable<Key>
@@ -139,28 +149,10 @@ namespace Spine.Runtime.MonoGame
 
 				return this.Equals(other);
 			}
-			
+
 			public override String ToString ()
 			{
 				return slotIndex + ":" + name;
-			}
-		}
-		
-		/** Attach all attachments from this skin if the corresponding attachment from the old skin is currently attached. */
-		internal void attachAll (Skeleton skeleton, Skin oldSkin)
-		{
-			foreach (var entry in attachments)
-			{
-				int slotIndex = entry.Key.slotIndex;
-				Slot slot = skeleton.slots [slotIndex];
-				if (slot.attachment == entry.Value)
-				{
-					Attachment attachment = getAttachment (slotIndex, entry.Key.name);
-					if (attachment != null)
-					{
-						slot.setAttachment (attachment);
-					}
-				}
 			}
 		}
 	}

@@ -9,155 +9,143 @@ namespace Spine.Runtime.MonoGame
 
 	public class SkeletonData
 	{
-		internal string name;
-		internal readonly List<BoneData> bones = new List<BoneData> (); // Ordered parents first.
-		internal readonly List<SlotData> slots = new List<SlotData> (); // Bind pose draw order.
-		internal readonly List<Skin> skins = new List<Skin> ();
-		internal Skin defaultSkin;
-		
-		public void clear ()
+		private readonly List<BoneData> bones = new List<BoneData> (); // Ordered parents first.
+		private readonly List<SlotData> slots = new List<SlotData> (); // Bind pose draw order.
+		private readonly List<Skin> skins = new List<Skin> ();
+
+		public SkeletonData(String name)
 		{
-			bones.Clear ();
-			slots.Clear ();
-			skins.Clear ();
-			defaultSkin = null;
+			this.Name = name;
 		}
-		
-		// --- Bones.
-		
-		public void addBone (BoneData bone)
+
+		public string Name
+		{
+			get;
+			private set;
+		}
+
+		public List<BoneData> Bones
+		{
+			get
+			{
+				return this.bones;
+			}
+		}
+
+		public List<SlotData> Slots
+		{
+			get
+			{
+				return this.slots;
+			}
+		}
+
+		public List<Skin> Skins
+		{
+			get
+			{
+				return this.skins;
+			}
+		}
+
+		public Skin DefaultSkin
+		{
+			get;
+			set;
+		}
+
+		public void AddBone (BoneData bone)
 		{
 			if (bone == null)
 			{
 				throw new ArgumentException ("bone cannot be null.");
 			}
-			bones.Add (bone);
+
+			this.bones.Add (bone);
 		}
-		
-		public List<BoneData> getBones ()
-		{
-			return bones;
-		}
-		
+
 		/** @return May be null. */
-		public BoneData findBone (String boneName)
+		public BoneData FindBone (String boneName)
 		{
 			if (boneName == null)
 			{
 				throw new ArgumentException ("boneName cannot be null.");
 			}
 
-			return this.bones.Find (x => x.name.Equals (boneName));
+			return this.bones.Find (x => x.Name.Equals (boneName));
 		}
 		
 		/** @return -1 if the bone was not found. */
-		public int findBoneIndex (String boneName)
+		public int FindBoneIndex (String boneName)
 		{
 			if (boneName == null)
 			{
 				throw new ArgumentException ("boneName cannot be null.");
 			}
 
-			return this.bones.FindIndex (x => x.name.Equals (boneName));
+			return this.bones.FindIndex (x => x.Name.Equals (boneName));
 		}
+
 		
-		// --- Slots.
-		
-		public void addSlot (SlotData slot)
+		public void AddSlot (SlotData slot)
 		{
 			if (slot == null)
 			{
 				throw new ArgumentException ("slot cannot be null.");
 			}
-			slots.Add (slot);
+
+			this.slots.Add (slot);
 		}
-		
-		public List<SlotData> getSlots ()
-		{
-			return slots;
-		}
-		
+
 		/** @return May be null. */
-		public SlotData findSlot (String slotName)
+		public SlotData FindSlot (String slotName)
 		{
 			if (slotName == null)
 			{
 				throw new ArgumentException ("slotName cannot be null.");
 			}
 
-			return this.slots.Find (x => x.name.Equals (slotName));
+			return this.slots.Find (x => x.Name.Equals (slotName));
 		}
 		
 		/** @return -1 if the bone was not found. */
-		public int findSlotIndex (String slotName)
+		public int FindSlotIndex (String slotName)
 		{
 			if (slotName == null)
 			{
 				throw new ArgumentException ("slotName cannot be null.");
 			}
 
-			return this.slots.FindIndex (x => x.name.Equals (slotName));
+			return this.slots.FindIndex (x => x.Name.Equals (slotName));
 		}
-		
-		// --- Skins.
-		
-		/** @return May be null. */
-		public Skin getDefaultSkin ()
-		{
-			return defaultSkin;
-		}
-		
-		/** @param defaultSkin May be null. */
-		public void setDefaultSkin (Skin defaultSkin)
-		{
-			this.defaultSkin = defaultSkin;
-		}
-		
-		public void addSkin (Skin skin)
+
+				
+		public void AddSkin (Skin skin)
 		{
 			if (skin == null)
 			{
 				throw new ArgumentException ("skin cannot be null.");
 			}
-			skins.Add (skin);
+
+			this.skins.Add (skin);
 		}
-		
+
 		/** @return May be null. */
-		public Skin findSkin (String skinName)
+		public Skin FindSkin (String skinName)
 		{
 			if (skinName == null)
 			{
 				throw new ArgumentException ("skinName cannot be null.");
 			}
-			foreach (Skin skin in skins)
-				if (skin.name.Equals (skinName))
-				{
-					return skin;
-				}
-			return null;
-		}
-		
-		/** Returns all skins, including the default skin. */
-		public List<Skin> getSkins ()
-		{
-			return skins;
-		}
 
-		/** @return May be null. */
-		public String getName ()
-		{
-			return name;
-		}
-		
-		/** @param name May be null. */
-		public void setName (String name)
-		{
-			this.name = name;
-		}
-		
-		public String toString ()
-		{
-			return name != null ? name : base.ToString ();
+			return this.skins.Find (x => x.Name.Equals (skinName));
 		}
 	}
 }
+
+
+
+
+
+
+
