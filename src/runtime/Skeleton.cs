@@ -20,8 +20,7 @@ namespace Spine.Runtime.MonoGame
 		internal Skin skin;
 		internal readonly Color color;
 		internal float time;
-		internal bool flipX, flipY;
-		
+
 		public Skeleton (SkeletonData data)
 		{
 			if (data == null)
@@ -89,13 +88,24 @@ namespace Spine.Runtime.MonoGame
 			private set;
 		}
 
+		public bool FlipX
+		{
+			get;
+			set;
+		}
 		
+		public bool FlipY
+		{
+			get;
+			set;
+		}
+
 		/** Updates the world transform for each bone. */
 		public void UpdateWorldTransform ()
 		{
 			foreach (var bone in this.bones)
 			{
-				bone.UpdateWorldTransform (this.flipX, this.flipY);
+				bone.UpdateWorldTransform (this.FlipX, this.FlipY);
 			}
 		}
 		
@@ -128,7 +138,7 @@ namespace Spine.Runtime.MonoGame
 			{
 				if (drawOrderItem.Attachment != null)
 				{
-					drawOrderItem.Attachment.Draw (batch, drawOrderItem);
+					drawOrderItem.Attachment.Draw (batch, drawOrderItem, this.FlipX, this.FlipY);
 				}
 			}
 		}

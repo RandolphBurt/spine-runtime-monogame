@@ -62,13 +62,14 @@ namespace Spine.Runtime.MonoGame.Attachments
 			set;
 		}
 
-		public override void Draw (SpriteBatch batch, Slot slot)
+		public override void Draw (SpriteBatch batch, Slot slot, bool flipX, bool flipY)
 		{
 			if (region == null)
 			{
 				throw new Exception ("RegionAttachment is not resolved: " + this);
 			}
 
+			// TODO - Need to change - Really all this calculation should be invoked from the Game.Update method - Drawing should just be drawing!
 			var imageX = slot.Bone.worldX + this.X * slot.Bone.m00 + this.Y * slot.Bone.m01;
 			var imageY = -(slot.Bone.worldY + this.X * slot.Bone.m10 + this.Y * slot.Bone.m11);
 			var imageRotation = -(slot.Bone.worldRotation + this.Rotation);
@@ -79,6 +80,16 @@ namespace Spine.Runtime.MonoGame.Attachments
 
 			image:setFillColor(slot.r, slot.g, slot.b, slot.a)
 			*/
+
+			if (flipX)
+			{
+				imageX *= -1;
+			}
+
+			if (flipY)
+			{
+				imageY *= -1;
+			}
 
 			// TODO - check that imageWidth / imageHeight is working for scaling
 

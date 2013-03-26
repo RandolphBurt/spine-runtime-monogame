@@ -16,7 +16,7 @@ namespace Spine.Runtime.MonoGame.Attachments
 		{
 		}
 
-		public override void Draw (SpriteBatch batch, Slot slot)
+		public override void Draw (SpriteBatch batch, Slot slot, bool flipX, bool flipY)
 		{
 		}
 

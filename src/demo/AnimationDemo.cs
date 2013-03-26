@@ -53,16 +53,15 @@ namespace Demo
 
 			var skeletonReader = new SkeletonJsonReader(new TextureAtlasAttachmentLoader( textureAtlas));
 			this.skeleton = skeletonReader.ReadSkeletonJsonFile("Content/skeleton-skeleton.json");
+			this.skeleton.FlipY = true;
 
 			var animationReader= new AnimationJsonReader();
 			this.animationWalk = animationReader.ReadAnimationJsonFile("Content/skeleton-WalkLeft.json", skeleton.Data);
 			this.animationJump = animationReader.ReadAnimationJsonFile("Content/skeleton-Jump.json", skeleton.Data);
 
-			// TODO - No idea why I have to specify a negative number to make it appear on screen! 
-			// Probably a bug somewhere.
 			Bone root = skeleton.GetRootBone();
 			root.X = 500;
-			root.Y = -700;
+			root.Y = 700;
 		
 			skeleton.UpdateWorldTransform();
 

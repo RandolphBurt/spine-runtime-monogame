@@ -27,7 +27,7 @@ namespace Spine.Runtime.MonoGame.Attachments
 			private set;
 		}
 
-		public abstract void Draw (SpriteBatch batch, Slot slot);
+		public abstract void Draw (SpriteBatch batch, Slot slot, bool flipX, bool flipY);
 	}
 }
 
