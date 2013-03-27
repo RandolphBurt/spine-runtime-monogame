@@ -72,37 +72,36 @@ namespace Spine.Runtime.MonoGame.Attachments
 			// TODO - Need to change - Really all this calculation should be invoked from the Game.Update method - Drawing should just be drawing!
 			var imageX = slot.Bone.worldX + this.X * slot.Bone.m00 + this.Y * slot.Bone.m01;
 			var imageY = -(slot.Bone.worldY + this.X * slot.Bone.m10 + this.Y * slot.Bone.m11);
+
+			if (flipX)
+			{
+				imageX *= -1;
+			}
+			
+			if (flipY)
+			{
+				imageY *= -1;
+			}
+
+			Vector2 destination = new Vector2(
+				(int)imageX, 
+				(int)imageY);
+
+			Vector2 origin = new Vector2(this.region.Area.Width / 2, this.region.Area.Height / 2);
 			var imageRotation = -(slot.Bone.worldRotation + this.Rotation);
-			var imageWidth = this.Width * (slot.Bone.worldScaleX + this.ScaleX - 1);
-			var imageHeight = this.Height * (slot.Bone.worldScaleY + this.ScaleY - 1);
+			var rotationRadians = (float)(imageRotation / 360 * (Math.PI * 2));
+
+			Vector2 scale = new Vector2(
+				slot.Bone.worldScaleX + this.ScaleX - 1,
+				slot.Bone.worldScaleY + this.ScaleY - 1);
 
 			/*
 
 			image:setFillColor(slot.r, slot.g, slot.b, slot.a)
 			*/
 
-			if (flipX)
-			{
-				imageX *= -1;
-			}
 
-			if (flipY)
-			{
-				imageY *= -1;
-			}
-
-			// TODO - check that imageWidth / imageHeight is working for scaling
-
-			Rectangle destination = new Rectangle(
-				(int)imageX, 
-				(int)imageY, 
-				(int)imageWidth, 
-				(int)imageHeight);
-
-			Vector2 origin = new Vector2(this.region.Area.Width / 2, this.region.Area.Height / 2);
-
-			float rot = (float)(imageRotation / 360 * (Math.PI * 2));
-			batch.Draw (region.Texture, destination, this.region.Area, Color.White, rot, origin, SpriteEffects.None, 0f);
+			batch.Draw (region.Texture, destination, this.region.Area, Color.White, rotationRadians, origin, scale, SpriteEffects.None, 0f);
 		}
 	}
 }
