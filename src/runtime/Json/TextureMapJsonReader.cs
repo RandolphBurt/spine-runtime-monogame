@@ -23,10 +23,12 @@ namespace Spine.Runtime.MonoGame.Json
 			{
 				"filename": "BackLowerLegLeft.png",
 			    "frame": {"x":185,"y":106,"w":36,"h":69},
+				"rotated": false,
 			},
 			{
 				"filename": "BackLowerLegRight.png",
 				"frame": {"x":147,"y":106,"w":36,"h":69},
+				"rotated": false,
 			},
 
 	    */
@@ -40,7 +42,11 @@ namespace Spine.Runtime.MonoGame.Json
 
 			foreach (var frame in data["frames"])
 			{
+				Rectangle textureAtlasArea;
+
 				string filename = Path.GetFileNameWithoutExtension((string)frame["filename"]);
+
+				var rotated = this.Read<bool>(frame, "rotated", false);
 
 				var details = frame["frame"];
 				var x = this.Read<int>(details, "x", 0);
@@ -48,7 +54,17 @@ namespace Spine.Runtime.MonoGame.Json
 				var width = this.Read<int>(details, "w", 0);
 				var height = this.Read<int>(details, "h", 0);
 
-				regions.Add(filename, new TextureRegion (texture, new Rectangle(x, y, width, height)));
+				if (rotated)
+				{
+					// The image inside our texture map is rotated so swap width and height
+					textureAtlasArea =new Rectangle(x, y, height, width);
+				}
+				else
+				{
+					textureAtlasArea =new Rectangle(x, y, width, height);
+				}
+
+				regions.Add(filename, new TextureRegion (texture, rotated, textureAtlasArea));
 			}
 
 			return new TextureAtlas(texture, regions);

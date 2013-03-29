@@ -9,10 +9,17 @@ namespace Spine.Runtime.MonoGame.Graphics
 
 	public class TextureRegion
 	{
-		public TextureRegion (Texture2D texture, Rectangle area)
+		public TextureRegion (Texture2D texture, bool rotated, Rectangle area)
 		{
 			this.Texture = texture;
 			this.Area = area;
+			this.Rotated = rotated;
+		}
+
+		public bool Rotated 
+		{
+			get;
+			private set;
 		}
 
 		public Rectangle Area

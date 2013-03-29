@@ -90,6 +90,12 @@ namespace Spine.Runtime.MonoGame.Attachments
 			Vector2 origin = new Vector2(this.region.Area.Width / 2, this.region.Area.Height / 2);
 			var imageRotation = -(slot.Bone.worldRotation + this.Rotation);
 
+			if (this.region.Rotated)
+			{
+				// Image inside our SpriteSheet/TextureAtlas was rotated so we need to unrotate
+				imageRotation -= 90;
+			}
+
 			var rotationRadians = (float)(imageRotation / 360 * (Math.PI * 2));
 
 			Vector2 scale = new Vector2(
