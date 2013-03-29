@@ -89,6 +89,7 @@ namespace Spine.Runtime.MonoGame.Attachments
 
 			Vector2 origin = new Vector2(this.region.Area.Width / 2, this.region.Area.Height / 2);
 			var imageRotation = -(slot.Bone.worldRotation + this.Rotation);
+
 			var rotationRadians = (float)(imageRotation / 360 * (Math.PI * 2));
 
 			Vector2 scale = new Vector2(
@@ -99,7 +100,6 @@ namespace Spine.Runtime.MonoGame.Attachments
 
 			image:setFillColor(slot.r, slot.g, slot.b, slot.a)
 			*/
-
 
 			batch.Draw (region.Texture, destination, this.region.Area, Color.White, rotationRadians, origin, scale, SpriteEffects.None, 0f);
 		}

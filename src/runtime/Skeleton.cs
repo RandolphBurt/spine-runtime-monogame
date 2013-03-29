@@ -143,28 +143,24 @@ namespace Spine.Runtime.MonoGame
 			}
 		}
 
-		/*
-		public void drawDebug (ShapeRenderer renderer) {
-			renderer.setColor(Color.RED);
-			renderer.begin(ShapeType.Line);
-			for (int i = 0, n = bones.Count; i < n; i++) {
-				Bone bone = bones.get(i);
-				if (bone.parent == null) continue;
-				float x = bone.data.length * bone.m00 + bone.worldX;
-				float y = bone.data.length * bone.m10 + bone.worldY;
-				renderer.line(bone.worldX, bone.worldY, x, y);
-			}
-			renderer.end();
+
+		public void DrawDebug (SpriteBatch batch, Texture2D lineTexture) 
+		{
+			foreach (Bone bone in bones)
+			{
+				if (bone.Parent == null) 
+				{
+					continue;
+				}
+
+				Vector2 point1 = new Vector2(bone.worldX, bone.worldY);
+				Vector2 point2 = new Vector2(bone.Data.Length * bone.m00 + bone.worldX, bone.Data.Length * bone.m10 + bone.worldY);
+				float angle = (float)Math.Atan2(point2.Y - point1.Y, point2.X - point1.X);
+				float length = Vector2.Distance(point1, point2);
 			
-			renderer.setColor(Color.GREEN);
-			renderer.begin(ShapeType.Filled);
-			for (int i = 0, n = bones.Count; i < n; i++) {
-				Bone bone = bones.get(i);
-				renderer.setColor(Color.GREEN);
-				renderer.circle(bone.worldX, bone.worldY, 3);
+				batch.Draw(lineTexture, point1, null, Color.Red, angle, Vector2.Zero, new Vector2(length, 5), SpriteEffects.None, 0);
 			}
-			renderer.end();
-		}*/
+		}
 		
 		/** @return May return null. */
 		public Bone GetRootBone ()
