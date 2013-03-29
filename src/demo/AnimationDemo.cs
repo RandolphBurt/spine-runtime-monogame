@@ -59,12 +59,12 @@ namespace Demo
 			var textureAtlas = texturePackerReader.ReadTextureJsonFile ("Content/crab.json", crabTextureMap);
 
 			var skeletonReader = new SkeletonJsonReader (new TextureAtlasAttachmentLoader (textureAtlas));
-			this.skeleton = skeletonReader.ReadSkeletonJsonFile ("Content/skeleton-skeleton.json");
+			this.skeleton = skeletonReader.ReadSkeletonJsonFile ("Content/crab-skeleton.json");
 			this.skeleton.FlipY = true;
 
 			var animationReader = new AnimationJsonReader ();
-			this.animationWalk = animationReader.ReadAnimationJsonFile ("Content/skeleton-WalkLeft.json", skeleton.Data);
-			this.animationJump = animationReader.ReadAnimationJsonFile ("Content/skeleton-Jump.json", skeleton.Data);
+			this.animationWalk = animationReader.ReadAnimationJsonFile ("Content/crab-WalkLeft.json", skeleton.Data);
+			this.animationJump = animationReader.ReadAnimationJsonFile ("Content/crab-Jump.json", skeleton.Data);
 
 			this.animation = 0;
 			this.SetSkeletonStartPosition ();
