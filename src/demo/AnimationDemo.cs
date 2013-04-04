@@ -62,9 +62,8 @@ namespace Demo
 			this.skeleton = skeletonReader.ReadSkeletonJsonFile ("Content/crab-skeleton.json");
 			this.skeleton.FlipY = true;
 
-			var animationReader = new AnimationJsonReader ();
-			this.animationWalk = animationReader.ReadAnimationJsonFile ("Content/crab-WalkLeft.json", skeleton.Data);
-			this.animationJump = animationReader.ReadAnimationJsonFile ("Content/crab-Jump.json", skeleton.Data);
+			this.animationWalk = skeleton.Data.FindAnimation ("WalkLeft");
+			this.animationJump = skeleton.Data.FindAnimation ("Jump");
 
 			this.animation = 0;
 			this.SetSkeletonStartPosition ();
