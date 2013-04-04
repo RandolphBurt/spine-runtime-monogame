@@ -63,23 +63,19 @@ namespace Demo
 		{
 			this.spriteBatch = new SpriteBatch (this.graphicsDeviceManager.GraphicsDevice);
 
-			var animationReader= new AnimationJsonReader();
-
 			this.crabSkeleton = this.LoadSkeleton("crab.png", "crab.json", "crab-skeleton.json");
-			this.crabAnimationWalk = animationReader.ReadAnimationJsonFile("Content/crab-WalkLeft.json", crabSkeleton.Data);
-			this.crabAnimationJump = animationReader.ReadAnimationJsonFile("Content/crab-Jump.json", crabSkeleton.Data);
+			this.crabAnimationWalk = this.crabSkeleton.Data.FindAnimation ("WalkLeft");
+			this.crabAnimationJump = this.crabSkeleton.Data.FindAnimation ("Jump");
 
 			this.dragonSkeleton = this.LoadSkeleton("dragon.png", "dragon.json", "dragon-skeleton.json");
-			this.dragonAnimationFly = animationReader.ReadAnimationJsonFile("Content/dragon-flying.json", dragonSkeleton.Data);
+			this.dragonAnimationFly = this.dragonSkeleton.Data.FindAnimation("flying");
 
-			this.animationWalk = skeleton.Data.FindAnimation ("WalkLeft");
-			this.animationJump = skeleton.Data.FindAnimation ("Jump");
 //			this.goblinSkeleton = this.LoadSkeleton("goblin.png", "goblin.json", "goblins-skeleton.json", 400, 700);
-//			this.goblinAnimationWalk = animationReader.ReadAnimationJsonFile("Content/goblins-walk.json", goblinSkeleton.Data);
+//			this.goblinAnimationWalk = this.goblinSkeleton.Data.FindAnimation(goblins-walk");
 
 			this.spineBoySkeleton = this.LoadSkeleton("spineboy.png", "spineboy.json", "spineboy-skeleton.json");
-			this.spineBoyAnimationWalk = animationReader.ReadAnimationJsonFile("Content/spineboy-walk.json", spineBoySkeleton.Data);
-			this.spineBoyAnimationJump = animationReader.ReadAnimationJsonFile("Content/spineboy-jump.json", spineBoySkeleton.Data);
+			this.spineBoyAnimationWalk = this.spineBoySkeleton.Data.FindAnimation("walk");
+			this.spineBoyAnimationJump = this.spineBoySkeleton.Data.FindAnimation("jump");
 
 			this.lineTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			this.lineTexture.SetData(new[]{Color.White});

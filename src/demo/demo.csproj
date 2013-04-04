@@ -115,15 +115,12 @@
     <Content Include="Content\crab.png" />
     <Content Include="Content\dragon.json" />
     <Content Include="Content\dragon.png" />
-    <Content Include="Content\dragon-flying.json" />
     <Content Include="Content\dragon-skeleton.json" />
     <Content Include="Content\goblins-skeleton.json" />
     <Content Include="Content\goblins-walk.json" />
     <Content Include="Content\spineboy.json" />
     <Content Include="Content\spineboy.png" />
-    <Content Include="Content\spineboy-jump.json" />
     <Content Include="Content\spineboy-skeleton.json" />
-    <Content Include="Content\spineboy-walk.json" />
     <Content Include="Content\crab-skeleton.json" />
     <Content Include="Content\goblin.json" />
     <Content Include="Content\goblin.png" />
