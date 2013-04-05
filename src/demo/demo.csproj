@@ -113,8 +113,6 @@
   <ItemGroup>
     <Content Include="Content\crab.json" />
     <Content Include="Content\crab.png" />
-    <Content Include="Content\skeleton-Jump.json" />
-    <Content Include="Content\skeleton-WalkLeft.json" />
-    <Content Include="Content\skeleton-skeleton.json" />
+    <Content Include="Content\crab-skeleton.json" />
   </ItemGroup>
 </Project>

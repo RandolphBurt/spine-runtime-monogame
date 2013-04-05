@@ -77,7 +77,6 @@
     <Compile Include="Attachments\Attachment.cs" />
     <Compile Include="Attachments\IAttachmentLoader.cs" />
     <Compile Include="Json\SkeletonJsonReader.cs" />
-    <Compile Include="Json\AnimationJsonReader.cs" />
     <Compile Include="Json\BaseJsonReader.cs" />
     <Compile Include="Graphics\TextureAtlas.cs" />
     <Compile Include="Graphics\TextureRegion.cs" />

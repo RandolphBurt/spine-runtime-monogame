@@ -13,6 +13,8 @@ namespace Spine.Runtime.MonoGame
 		internal readonly List<BoneData> bones = new List<BoneData> (); // Ordered parents first.
 		internal readonly List<SlotData> slots = new List<SlotData> (); // Bind pose draw order.
 		internal readonly List<Skin> skins = new List<Skin> ();
+		private readonly List<Animation> animations = new List<Animation> ();
+
 		internal Skin defaultSkin;
 		
 		public void clear ()
@@ -22,7 +24,18 @@ namespace Spine.Runtime.MonoGame
 			skins.Clear ();
 			defaultSkin = null;
 		}
+
 		
+		public void AddAnimation(Animation animation)
+		{
+			if (animation == null)
+			{
+				throw new ArgumentException ("animation cannot be null.");
+			}
+			
+			this.animations.Add(animation);
+		}
+
 		// --- Bones.
 		
 		public void addBone (BoneData bone)
@@ -38,6 +51,19 @@ namespace Spine.Runtime.MonoGame
 		{
 			return bones;
 		}
+
+		
+		/** @return May be null. */
+		public Animation FindAnimation (String animationName)
+		{
+			if (animationName == null)
+			{
+				throw new ArgumentException ("animationName cannot be null.");
+			}
+			
+			return this.animations.Find (x => x.name.Equals (animationName));
+		}
+
 		
 		/** @return May be null. */
 		public BoneData findBone (String boneName)

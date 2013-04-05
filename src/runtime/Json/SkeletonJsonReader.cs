@@ -2,6 +2,10 @@
 /// SkeletonJsonReader.cs
 /// 2013-March
 /// </summary>
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+
+
 namespace Spine.Runtime.MonoGame.Json
 {
 	using System;
@@ -15,6 +19,12 @@ namespace Spine.Runtime.MonoGame.Json
 
 	public class SkeletonJsonReader : BaseJsonReader
 	{
+		private const String TIMELINE_SCALE = "scale";
+		private const String TIMELINE_ROTATE = "rotate";
+		private const String TIMELINE_TRANSLATE = "translate";
+		private const String TIMELINE_ATTACHMENT = "attachment";
+		private const String TIMELINE_COLOR = "color";
+
 		private readonly IAttachmentLoader attachmentLoader;
 
 		public SkeletonJsonReader (TextureAtlas atlas)
@@ -38,12 +48,49 @@ namespace Spine.Runtime.MonoGame.Json
 			this.ReadSkeletonBones (skeletonData, data, scale);
 			this.ReadSkeletonSlots (skeletonData, data);
 			this.ReadSkeletonSkins (skeletonData, data, scale);
+			this.ReadAnimations (skeletonData, data, scale);
 
 			skeletonData.bones.TrimExcess ();
 			skeletonData.slots.TrimExcess ();
 			skeletonData.skins.TrimExcess ();
 
 			return new Skeleton (skeletonData);
+		}
+
+		private void ReadAnimations (SkeletonData skeletonData, JObject data, float scale)
+		{
+			foreach (JProperty animation in data["animations"])
+			{
+				Animation skeletonAnimation = this.ReadAnimation(skeletonData, (JObject) animation.Value, scale);
+				skeletonAnimation.name = animation.Name;
+				skeletonData.AddAnimation(skeletonAnimation);
+			}
+		}
+		
+		private Animation ReadAnimation (SkeletonData skeletonData, JObject animationData, float scale)
+		{
+			var timelines = new List<ITimeline> ();
+			
+			var boneTimelines = this.ReadAnimationBones (skeletonData, animationData, scale);
+			var slotTimelines = this.ReadAnimationSlots (skeletonData, animationData);
+			
+			timelines.AddRange (boneTimelines);
+			timelines.AddRange (slotTimelines);
+			
+			timelines.TrimExcess ();
+			
+			float duration = 0;
+			
+			foreach (var timeline in timelines)
+			{
+				var timelineDuration = timeline.getDuration ();
+				if (timelineDuration > duration)
+				{
+					duration = timelineDuration;
+				}
+			}
+			
+			return new Animation (timelines, duration);
 		}
 
 		private void ReadSkeletonSkins (SkeletonData skeletonData, JObject data, float scale)
@@ -170,6 +217,194 @@ namespace Spine.Runtime.MonoGame.Json
 				boneData.scaleX = this.Read<float> (bone, "scaleX", 1);
 				boneData.scaleY = this.Read<float> (bone, "scaleY", 1);
 				skeletonData.addBone (boneData);
+			}
+		}
+
+		
+		private List<ITimeline> ReadAnimationBones (SkeletonData skeletonData, JObject data, float scale)
+		{
+			List<ITimeline> timelines = new List<ITimeline> ();
+			
+			foreach (JProperty bone in data["bones"])
+			{
+				int boneIndex = skeletonData.findBoneIndex (bone.Name);
+				if (boneIndex == -1)
+				{
+					throw new SerializationException ("Bone not found: " + bone.Name);
+				}
+				
+				foreach (JProperty timelineType in bone.Value)
+				{
+					JArray jsonTimelineList = (JArray)timelineType.Value;
+					
+					ITimeline timeline;
+					
+					switch (timelineType.Name)
+					{
+						case TIMELINE_ROTATE:
+							timeline = this.ReadAnimationRotationTimeline (jsonTimelineList, boneIndex);
+							break;
+							
+						case TIMELINE_TRANSLATE:
+							timeline = this.ReadAnimationTranslationTimeline (jsonTimelineList, boneIndex, scale);
+							break;
+							
+						case TIMELINE_SCALE:
+							timeline = this.ReadAnimationScaleTimeline (jsonTimelineList, boneIndex);
+							break;
+							
+						default:
+							throw new Exception ("Invalid timeline type for a bone: " + timelineType.Name + " (" + bone.Name + ")");
+					}
+					
+					timelines.Add (timeline);
+				}
+			}
+			
+			return timelines;
+		}
+		
+		private List<ITimeline> ReadAnimationSlots (SkeletonData skeletonData, JObject data)
+		{
+			List<ITimeline> timelines = new List<ITimeline> ();
+			
+			var dataSlots = data ["slots"];
+			
+			if (dataSlots != null)
+			{
+				foreach (JProperty jsonSlot in dataSlots)
+				{
+					int slotIndex = skeletonData.findSlotIndex (jsonSlot.Name);
+					
+					foreach (JProperty jsonTimelineType in jsonSlot.Value)
+					{
+						JArray jsonTimelineList = (JArray)jsonTimelineType.Value;
+						
+						ITimeline timeline;
+						
+						switch (jsonTimelineType.Name)
+						{
+							case TIMELINE_COLOR:
+								
+								timeline = this.ReadAnimationColorTimeline (jsonTimelineList, slotIndex);
+								break;
+								
+							case TIMELINE_ATTACHMENT:
+								timeline = this.ReadAnimationAttachmentTimeline (jsonTimelineList, slotIndex);
+								break;
+								
+							default:
+								throw new Exception ("Invalid timeline type for a slot: " + jsonTimelineType.Name + " (" + jsonSlot.Name + ")");
+						}
+						
+						timelines.Add (timeline);
+					}
+				}	
+			}
+			
+			return timelines;
+		}
+		
+		private ITimeline ReadAnimationTranslationTimeline (JArray jsonTimelineList, int boneIndex, float scale)
+		{
+			var translateTimeline = new TranslateTimeline (jsonTimelineList.Count);
+			
+			this.PopulateAnimationTranslationScaleTimeline (translateTimeline, jsonTimelineList, boneIndex, scale);
+			
+			return translateTimeline;
+		}
+		
+		private ITimeline ReadAnimationScaleTimeline (JArray jsonTimelineList, int boneIndex)
+		{
+			var scaleTimeline = new ScaleTimeline (jsonTimelineList.Count);
+			
+			this.PopulateAnimationTranslationScaleTimeline (scaleTimeline, jsonTimelineList, boneIndex, 1);
+			
+			return scaleTimeline;
+		}
+		
+		private void PopulateAnimationTranslationScaleTimeline (TranslateTimeline translateScaleTimeline, JArray jsonTimelineList, int boneIndex, float timelineScale)
+		{
+			translateScaleTimeline.boneIndex = boneIndex;
+			
+			int keyframeIndex = 0;
+			foreach (JToken jsonTimeline in jsonTimelineList)
+			{
+				float time = (float)jsonTimeline ["time"];
+				float x = this.Read<float> (jsonTimeline, "x", 0);
+				float y = this.Read<float> (jsonTimeline, "y", 0);
+				translateScaleTimeline.setKeyframe (keyframeIndex, time, x * timelineScale, y * timelineScale);
+				this.ReadAnimationCurve (translateScaleTimeline, keyframeIndex, jsonTimeline);
+				keyframeIndex++;
+			}
+		}
+		
+		private RotateTimeline ReadAnimationRotationTimeline (JArray jsonTimelineList, int boneIndex)
+		{
+			var rotateTimeline = new RotateTimeline (jsonTimelineList.Count);
+			rotateTimeline.setBoneIndex (boneIndex);
+			
+			int keyframeIndex = 0;
+			foreach (JToken jsonTimeline in jsonTimelineList)
+			{
+				float time = (float)jsonTimeline ["time"];
+				rotateTimeline.setKeyframe (keyframeIndex, time, (float)jsonTimeline ["angle"]);
+				this.ReadAnimationCurve (rotateTimeline, keyframeIndex, jsonTimeline);
+				keyframeIndex++;
+			}
+			
+			return rotateTimeline;
+		}
+		
+		private ColorTimeline ReadAnimationColorTimeline (JArray jsonTimelineList, int slotIndex)
+		{
+			var colorTimeline = new ColorTimeline (jsonTimelineList.Count);
+			colorTimeline.setSlotIndex (slotIndex);
+			
+			int keyframeIndex = 0;
+			foreach (JToken timeline in jsonTimelineList)
+			{
+				float time = (float)timeline ["time"];
+				Color color = this.ReadColor ((String)timeline ["color"]);
+				colorTimeline.setKeyframe (keyframeIndex, time, color.R, color.G, color.B, color.A);
+				this.ReadAnimationCurve (colorTimeline, keyframeIndex, timeline);
+				keyframeIndex++;
+			}
+			
+			return colorTimeline;
+		}
+		
+		private AttachmentTimeline ReadAnimationAttachmentTimeline (JArray jsonTimelineList, int slotIndex)
+		{
+			AttachmentTimeline attachmentTimeline = new AttachmentTimeline (jsonTimelineList.Count);
+			attachmentTimeline.setSlotIndex (slotIndex);
+			
+			int keyframeIndex = 0;
+			foreach (JToken timeline in jsonTimelineList)
+			{
+				float time = (float)timeline ["time"];
+				attachmentTimeline.setKeyframe (keyframeIndex++, time, (String)timeline ["name"]);
+			}
+			
+			return attachmentTimeline;
+		}
+		
+		private void ReadAnimationCurve (CurveTimeline timeline, int keyframeIndex, JToken valueMap)
+		{
+			JToken curveObject = valueMap ["curve"];
+			if (curveObject == null)
+			{
+				return;
+			}
+			if (curveObject is JArray)
+			{
+				JArray curve = (JArray)curveObject;
+				timeline.setCurve (keyframeIndex, (float)curve [0], (float)curve [1], (float)curve [2], (float)curve [3]);
+			}
+			else
+				if (curveObject.Value<string> ().Equals ("stepped"))
+			{
+				timeline.setStepped (keyframeIndex);
 			}
 		}
 	}

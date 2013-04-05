@@ -9,7 +9,7 @@ namespace Spine.Runtime.MonoGame
 
 	public class Animation : IEquatable<Animation>
 	{
-		private String name;
+		internal String name;
 		private readonly List<ITimeline> timelines;
 		private float duration;
 		
