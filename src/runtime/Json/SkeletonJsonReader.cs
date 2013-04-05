@@ -2,15 +2,14 @@
 /// SkeletonJsonReader.cs
 /// 2013-March
 /// </summary>
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-
-
 namespace Spine.Runtime.MonoGame.Json
 {
 	using System;
-	using System.IO;	
+	using System.Collections.Generic;	
+	using System.IO;
 	using System.Runtime.Serialization;
+
+	using Microsoft.Xna.Framework;
 
 	using Newtonsoft.Json.Linq;
 
