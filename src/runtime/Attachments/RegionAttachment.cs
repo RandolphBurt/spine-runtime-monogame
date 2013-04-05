@@ -186,16 +186,12 @@ namespace Spine.Runtime.MonoGame.Attachments
 			origin = Vector2.Zero;
 			var imageRotation = -(slot.bone.worldRotation + this.rotation);
 
-			/*
-			if(slot.toString () == "BackLowerLegLeft")
+			if (this.region.Rotated)
 			{
-				System.Diagnostics.Debug.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16} {17} {18} {19} ", 
-				                                   this.vertices[X1], this.vertices[Y1], this.vertices[C1], this.vertices[U1], this.vertices[V1],
-				                                   this.vertices[X2], this.vertices[Y2], this.vertices[C2], this.vertices[U2], this.vertices[V2],
-				                                   this.vertices[X3], this.vertices[Y3], this.vertices[C3], this.vertices[U3], this.vertices[V3],
-				                                   this.vertices[X4], this.vertices[Y4], this.vertices[C4], this.vertices[U4], this.vertices[V4]);
-				                                   }
-			*/
+				// Image inside our SpriteSheet/TextureAtlas was rotated so we need to unrotate
+				imageRotation -= 90;
+				origin = new Vector2(this.region.Area.Width, 0);
+			}
 
 			var rotationRadians = (float)(imageRotation / 360 * (Math.PI * 2));
 			

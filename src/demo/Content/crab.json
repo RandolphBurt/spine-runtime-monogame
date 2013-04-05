@@ -2,7 +2,7 @@
 
 {
 	"filename": "BackLowerLegLeft.png",
-	"frame": {"x":185,"y":106,"w":36,"h":69},
+	"frame": {"x":294,"y":335,"w":36,"h":69},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":36,"h":69},
@@ -10,7 +10,7 @@
 },
 {
 	"filename": "BackLowerLegRight.png",
-	"frame": {"x":147,"y":106,"w":36,"h":69},
+	"frame": {"x":285,"y":407,"w":36,"h":69},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":36,"h":69},
@@ -18,23 +18,23 @@
 },
 {
 	"filename": "BackUpperLegLeft.png",
-	"frame": {"x":148,"y":2,"w":70,"h":38},
-	"rotated": false,
+	"frame": {"x":254,"y":335,"w":70,"h":38},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":38},
 	"sourceSize": {"w":70,"h":38}
 },
 {
 	"filename": "BackUpperLegRight.png",
-	"frame": {"x":2,"y":42,"w":70,"h":38},
-	"rotated": false,
+	"frame": {"x":245,"y":420,"w":70,"h":38},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":38},
 	"sourceSize": {"w":70,"h":38}
 },
 {
 	"filename": "ClawLowerLeft.png",
-	"frame": {"x":2,"y":548,"w":80,"h":136},
+	"frame": {"x":2,"y":352,"w":80,"h":136},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":136},
@@ -42,15 +42,15 @@
 },
 {
 	"filename": "ClawLowerRight.png",
-	"frame": {"x":2,"y":689,"w":73,"h":140},
-	"rotated": false,
+	"frame": {"x":2,"y":164,"w":73,"h":140},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":73,"h":140},
 	"sourceSize": {"w":73,"h":140}
 },
 {
 	"filename": "ClawNoTeethLeft.png",
-	"frame": {"x":134,"y":434,"w":112,"h":112},
+	"frame": {"x":392,"y":134,"w":112,"h":112},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":112},
@@ -58,31 +58,31 @@
 },
 {
 	"filename": "ClawNoTeethRight.png",
-	"frame": {"x":2,"y":434,"w":130,"h":86},
-	"rotated": false,
+	"frame": {"x":405,"y":2,"w":130,"h":86},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":130,"h":86},
 	"sourceSize": {"w":130,"h":86}
 },
 {
 	"filename": "ClawTeethLeft.png",
-	"frame": {"x":77,"y":689,"w":89,"h":156},
-	"rotated": false,
+	"frame": {"x":247,"y":2,"w":89,"h":156},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":89,"h":156},
 	"sourceSize": {"w":89,"h":156}
 },
 {
 	"filename": "ClawTeethRight.png",
-	"frame": {"x":84,"y":548,"w":111,"h":139},
-	"rotated": false,
+	"frame": {"x":2,"y":239,"w":111,"h":139},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":111,"h":139},
 	"sourceSize": {"w":111,"h":139}
 },
 {
 	"filename": "ClawUpperLeft.png",
-	"frame": {"x":2,"y":106,"w":143,"h":67},
+	"frame": {"x":247,"y":93,"w":143,"h":67},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":143,"h":67},
@@ -90,7 +90,7 @@
 },
 {
 	"filename": "ClawUpperRight.png",
-	"frame": {"x":2,"y":177,"w":141,"h":72},
+	"frame": {"x":247,"y":162,"w":141,"h":72},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":141,"h":72},
@@ -98,7 +98,7 @@
 },
 {
 	"filename": "EyeLeft.png",
-	"frame": {"x":2,"y":262,"w":83,"h":83},
+	"frame": {"x":228,"y":250,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":83,"h":83},
@@ -106,7 +106,7 @@
 },
 {
 	"filename": "EyeLeftLookingLeft.png",
-	"frame": {"x":145,"y":177,"w":83,"h":83},
+	"frame": {"x":169,"y":335,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":83,"h":83},
@@ -114,7 +114,7 @@
 },
 {
 	"filename": "EyeLeftLookingRight.png",
-	"frame": {"x":2,"y":347,"w":83,"h":83},
+	"frame": {"x":143,"y":250,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":83,"h":83},
@@ -122,15 +122,15 @@
 },
 {
 	"filename": "EyeLidLeft.png",
-	"frame": {"x":75,"y":2,"w":71,"h":31},
-	"rotated": false,
+	"frame": {"x":212,"y":420,"w":71,"h":31},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":71,"h":31},
 	"sourceSize": {"w":71,"h":31}
 },
 {
 	"filename": "EyeLidRight.png",
-	"frame": {"x":2,"y":2,"w":71,"h":31},
+	"frame": {"x":313,"y":236,"w":71,"h":31},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":71,"h":31},
@@ -138,7 +138,7 @@
 },
 {
 	"filename": "EyeRight.png",
-	"frame": {"x":87,"y":262,"w":83,"h":83},
+	"frame": {"x":84,"y":352,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":83,"h":83},
@@ -146,7 +146,7 @@
 },
 {
 	"filename": "EyeRightLookingLeft.png",
-	"frame": {"x":145,"y":177,"w":83,"h":83},
+	"frame": {"x":169,"y":335,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":83,"h":83},
@@ -154,7 +154,7 @@
 },
 {
 	"filename": "EyeRightLookingRight.png",
-	"frame": {"x":2,"y":347,"w":83,"h":83},
+	"frame": {"x":143,"y":250,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":83,"h":83},
@@ -162,39 +162,39 @@
 },
 {
 	"filename": "FrontLowerLegLeft.png",
-	"frame": {"x":130,"y":347,"w":41,"h":85},
-	"rotated": false,
+	"frame": {"x":144,"y":207,"w":41,"h":85},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":41,"h":85},
 	"sourceSize": {"w":41,"h":85}
 },
 {
 	"filename": "FrontLowerLegRight.png",
-	"frame": {"x":87,"y":347,"w":41,"h":85},
-	"rotated": false,
+	"frame": {"x":144,"y":164,"w":41,"h":85},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":41,"h":85},
 	"sourceSize": {"w":41,"h":85}
 },
 {
 	"filename": "FrontUpperLegLeft.png",
-	"frame": {"x":148,"y":42,"w":72,"h":62},
-	"rotated": false,
+	"frame": {"x":148,"y":437,"w":72,"h":62},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":72,"h":62},
 	"sourceSize": {"w":72,"h":62}
 },
 {
 	"filename": "FrontUpperLegRight.png",
-	"frame": {"x":74,"y":42,"w":72,"h":62},
-	"rotated": false,
+	"frame": {"x":84,"y":437,"w":72,"h":62},
+	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":72,"h":62},
 	"sourceSize": {"w":72,"h":62}
 },
 {
 	"filename": "Head.png",
-	"frame": {"x":2,"y":847,"w":243,"h":160},
+	"frame": {"x":2,"y":2,"w":243,"h":160},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":243,"h":160},
@@ -205,8 +205,8 @@
 	"version": "1.0",
 	"image": "crab.png",
 	"format": "RGBA8888",
-	"size": {"w":256,"h":1024},
+	"size": {"w":512,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:f47d1a6313527ebe91a9cb1efe029ff8$"
+	"smartupdate": "$TexturePacker:SmartUpdate:013367503963664c0f1612a433c64f74$"
 }
 }
