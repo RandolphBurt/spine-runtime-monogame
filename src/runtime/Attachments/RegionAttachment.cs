@@ -178,13 +178,14 @@ namespace Spine.Runtime.MonoGame.Attachments
 			Bone bone = slot.getBone ();
 			updateWorldVertices (bone);
 
-			Rectangle destination = new Rectangle(
+			Vector2 destination = new Vector2(
 				(int)this.vertices[X2], 
-				800 - (int)this.vertices[Y2], 
-				(int)this.width, 
-				(int)this.height);
+				(int)this.vertices[Y2]);
 
 			Vector2 origin = new Vector2(this.region.Area.Width / 2, this.region.Area.Height / 2);
+			origin = Vector2.Zero;
+			var imageRotation = -(slot.bone.worldRotation + this.rotation);
+
 			/*
 			if(slot.toString () == "BackLowerLegLeft")
 			{
@@ -196,12 +197,14 @@ namespace Spine.Runtime.MonoGame.Attachments
 				                                   }
 			*/
 
-			float rot = (float)((rotation  + bone.rotation) / 360 * (Math.PI * 2));
-			//batch.Draw (region.Texture, destination, this.region.Area, Color.White, rot, origin, SpriteEffects.None, 0f);
-			batch.Draw (region.Texture, destination, this.region.Area, Color.White);
+			var rotationRadians = (float)(imageRotation / 360 * (Math.PI * 2));
+			
+			Vector2 scale = new Vector2(
+				slot.bone.worldScaleX + this.scaleX - 1,
+				slot.bone.worldScaleY + this.scaleY - 1);
 
-			// TODO
-			// batch.Draw (region.Texture, vertices, 0, vertices.length);
+			batch.Draw (region.Texture, destination, this.region.Area, Color.White, rotationRadians, origin, scale, SpriteEffects.None, 0f);
+			//batch.Draw (region.Texture, destination, this.region.Area, Color.White);
 		}
 			
 		internal void updateWorldVertices (Bone bone)

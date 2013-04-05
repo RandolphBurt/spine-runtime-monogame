@@ -53,14 +53,16 @@ namespace Demo
 
 			var skeletonReader = new SkeletonJsonReader(new TextureAtlasAttachmentLoader( textureAtlas));
 			this.skeleton = skeletonReader.ReadSkeletonJsonFile("Content/skeleton-skeleton.json");
+			this.skeleton.setFlipY(true);
 
 			var animationReader= new AnimationJsonReader();
 			this.animationWalk = animationReader.ReadAnimationJsonFile("Content/skeleton-WalkLeft.json", skeleton.getData());
 			this.animationJump = animationReader.ReadAnimationJsonFile("Content/skeleton-Jump.json", skeleton.getData());
 
+			skeleton.setToBindPose();
 			Bone root = skeleton.getRootBone();
 			root.setX(500);
-			root.setY(150);
+			root.setY(700);
 			
 			skeleton.updateWorldTransform();
 
