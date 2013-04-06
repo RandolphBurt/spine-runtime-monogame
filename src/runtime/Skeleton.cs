@@ -46,7 +46,7 @@ namespace Spine.Runtime.MonoGame
 				drawOrder.Add (slot);
 			}
 			
-			color = new Color (1, 1, 1, 1);
+			color = new Color (1f, 1f, 1f, 1f);
 		}
 		
 		/** Copy constructor. */

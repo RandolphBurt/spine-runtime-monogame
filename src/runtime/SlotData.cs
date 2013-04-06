@@ -9,7 +9,7 @@ namespace Spine.Runtime.MonoGame
 
 	public class SlotData
 	{
-		private Color color = new Color (1, 1, 1, 1);
+		private Color color = new Color (1f, 1f, 1f, 1f);
 
 		public String Name
 		{
