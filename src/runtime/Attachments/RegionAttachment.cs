@@ -102,12 +102,9 @@ namespace Spine.Runtime.MonoGame.Attachments
 				slot.Bone.worldScaleX + this.ScaleX - 1,
 				slot.Bone.worldScaleY + this.ScaleY - 1);
 
-			/*
-
-			image:setFillColor(slot.r, slot.g, slot.b, slot.a)
-			*/
-
-			batch.Draw (region.Texture, destination, this.region.Area, Color.White, rotationRadians, origin, scale, SpriteEffects.None, 0f);
+			// We just use the slot color - not the skeleton color - The libgdx runtime multiplies the skeleton and slot color together however the skeleton color is always White 
+			// and cannot currently be changed so might as well juse use the slot color
+			batch.Draw (region.Texture, destination, this.region.Area, slot.Color, rotationRadians, origin, scale, SpriteEffects.None, 0f);
 		}
 	}
 }
