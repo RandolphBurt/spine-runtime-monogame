@@ -54,17 +54,17 @@ namespace Spine.Runtime.MonoGame
 			{
 				return;
 			} // Time is before first frame.
-			
-			Color color = skeleton.slots [this.slotIndex].Color;
+
+			var slot = skeleton.slots [slotIndex];
 			
 			if (time >= frames [frames.Length - 5])
 			{ // Time is after last frame.
-				int i = this.frames.Length - 1;
-				float colorRed = this.frames [i - 3];
-				float colorGreen = this.frames [i - 2];
-				float colorBlue = this.frames [i - 1];
-				float colorAlpha = this.frames [i];
-				color = new Color (colorRed, colorGreen, colorBlue, colorAlpha);
+				int i = frames.Length - 1;
+				float colorRed = frames [i - 3];
+				float colorGreen = frames [i - 2];
+				float colorBlue = frames [i - 1];
+				float colorAlpha = frames [i];
+				slot.Color = new Color ((int)colorRed, (int)colorGreen, (int)colorBlue, (int)colorAlpha);
 				return;
 			}
 			
@@ -85,15 +85,15 @@ namespace Spine.Runtime.MonoGame
 
 			if (alpha < 1)
 			{
-				color = new Color (
-					MathUtils.Clamp (color.R + ((r - color.R) * alpha), 0, 1),
-					MathUtils.Clamp (color.G + ((g - color.G) * alpha), 0, 1),
-					MathUtils.Clamp (color.B + ((b - color.B) * alpha), 0, 1),
-					MathUtils.Clamp (color.A + ((a - color.A) * alpha), 0, 1));
+				slot.Color = new Color (
+					MathUtils.Clamp ((int)(slot.Color.R + ((r - slot.Color.R) * alpha)), 0, 255),
+	                MathUtils.Clamp ((int)(slot.Color.G + ((g - slot.Color.G) * alpha)), 0, 255),
+    	            MathUtils.Clamp ((int)(slot.Color.B + ((b - slot.Color.B) * alpha)), 0, 255),
+        	        MathUtils.Clamp ((int)(slot.Color.A + ((a - slot.Color.A) * alpha)), 0, 255));
 			}
 			else
 			{
-				color = new Color (r, g, b, a);
+				slot.Color = new Color ((int)r, (int)g, (int)b, (int)a);
 			}
 		}
 	}
