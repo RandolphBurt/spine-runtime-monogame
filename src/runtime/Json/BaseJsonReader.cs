@@ -24,12 +24,14 @@ namespace Spine.Runtime.MonoGame.Json
 		protected Color ReadColor (string input)
 		{
 			var colorValue = uint.Parse (input, System.Globalization.NumberStyles.HexNumber);
-			return new Color (
-				(colorValue >> 6) & 0xff,
-				(colorValue >> 4) & 0xff,
-				(colorValue >> 2) & 0xff,
-				colorValue & 0xff
+			var c = new Color (
+				(int)((colorValue >> 24) & 0xff),
+				(int)((colorValue >> 16) & 0xff),
+				(int)((colorValue >> 8) & 0xff),
+				(int)(colorValue & 0xff)
 				);
+
+			return c;
 		}
 	}
 }
