@@ -158,22 +158,11 @@ namespace Spine.Runtime.MonoGame.Attachments
 			if (region == null)
 			{
 				throw new Exception ("RegionAttachment is not resolved: " + this);
-			}
-				
-			/* TODO
-				Color skeletonColor = slot.getSkeleton().getColor();
-				Color slotColor = slot.getColor();
-				float color = NumberUtils.intToFloatColor( //
-				                                          ((int)(255 * skeletonColor.a * slotColor.a) << 24) //
-				                                          | ((int)(255 * skeletonColor.b * slotColor.b) << 16) //
-				                                          | ((int)(255 * skeletonColor.g * slotColor.g) << 8) //
-				                                          | ((int)(255 * skeletonColor.r * slotColor.r)));
-				float[] vertices = this.vertices;
-				vertices[C1] = color;
-				vertices[C2] = color;
-				vertices[C3] = color;
-				vertices[C4] = color;
-				*/
+			}				
+
+			// We just use the slot color - not the skeleton color - The libgdx runtime multiplies the skeleton and slot color together however the skeleton color is always White 
+			// and cannot currently be changed so might as well juse use the slot color
+			Color imageColor = slot.getColor();				
 
 			Bone bone = slot.getBone ();
 			updateWorldVertices (bone);
@@ -182,8 +171,7 @@ namespace Spine.Runtime.MonoGame.Attachments
 				(int)this.vertices[X2], 
 				(int)this.vertices[Y2]);
 
-			Vector2 origin = new Vector2(this.region.Area.Width / 2, this.region.Area.Height / 2);
-			origin = Vector2.Zero;
+			Vector2 origin = Vector2.Zero;
 			var imageRotation = -(slot.bone.worldRotation + this.rotation);
 
 			if (this.region.Rotated)
@@ -199,8 +187,7 @@ namespace Spine.Runtime.MonoGame.Attachments
 				slot.bone.worldScaleX + this.scaleX - 1,
 				slot.bone.worldScaleY + this.scaleY - 1);
 
-			batch.Draw (region.Texture, destination, this.region.Area, Color.White, rotationRadians, origin, scale, SpriteEffects.None, 0f);
-			//batch.Draw (region.Texture, destination, this.region.Area, Color.White);
+			batch.Draw (region.Texture, destination, this.region.Area, imageColor, rotationRadians, origin, scale, SpriteEffects.None, 0f);
 		}
 			
 		internal void updateWorldVertices (Bone bone)
