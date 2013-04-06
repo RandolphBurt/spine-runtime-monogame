@@ -11,7 +11,7 @@ namespace Spine.Runtime.MonoGame
 	{
 		internal readonly String name;
 		internal readonly BoneData boneData;
-		internal Color color = new Color (1, 1, 1, 1);
+		internal Color color = new Color (1f, 1f, 1f, 1f);
 		internal String attachmentName;
 		
 		SlotData ()

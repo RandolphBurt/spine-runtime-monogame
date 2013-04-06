@@ -23,7 +23,7 @@ namespace Spine.Runtime.MonoGame
 			data = null;
 			bone = null;
 			skeleton = null;
-			color = new Color (1, 1, 1, 1);
+			color = new Color (1f, 1f, 1f, 1f);
 		}
 		
 		public Slot (SlotData data, Skeleton skeleton, Bone bone)
@@ -43,7 +43,7 @@ namespace Spine.Runtime.MonoGame
 			this.data = data;
 			this.skeleton = skeleton;
 			this.bone = bone;
-			color = new Color (1, 1, 1, 1);
+			color = new Color (1f, 1f, 1f, 1f);
 			setToBindPose ();
 		}
 		
