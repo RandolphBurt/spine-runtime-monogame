@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "background.jpg",
+	"frame": {"x":2,"y":2,"w":1680,"h":1050},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1680,"h":1050},
+	"sourceSize": {"w":1680,"h":1050}
+},
+{
+	"filename": "leaves.png",
+	"frame": {"x":2,"y":1448,"w":1042,"h":522},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1042,"h":522},
+	"sourceSize": {"w":1042,"h":522}
+},
+{
+	"filename": "logo.png",
+	"frame": {"x":1684,"y":2,"w":917,"h":323},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":917,"h":323},
+	"sourceSize": {"w":917,"h":323}
+},
+{
+	"filename": "play.png",
+	"frame": {"x":1684,"y":921,"w":218,"h":77},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":218,"h":77},
+	"sourceSize": {"w":218,"h":77}
+},
+{
+	"filename": "quit.png",
+	"frame": {"x":1904,"y":921,"w":216,"h":77},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":216,"h":77},
+	"sourceSize": {"w":216,"h":77}
+},
+{
+	"filename": "settings.png",
+	"frame": {"x":1684,"y":1000,"w":446,"h":76},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":446,"h":76},
+	"sourceSize": {"w":446,"h":76}
+}],
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "spinosaurus.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0aad86af86844cc8f835fb673d2b2f9f$"
+}
+}

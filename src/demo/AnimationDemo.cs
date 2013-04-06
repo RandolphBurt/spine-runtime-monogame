@@ -22,6 +22,9 @@ namespace Demo
 
 		private SpriteBatch spriteBatch;
 
+		private Skeleton spinosaurusSkeleton;
+		private Animation spinosaurusAnimation;
+
 		private Skeleton crabSkeleton;
 		private Animation crabAnimationWalk;
 		private Animation crabAnimationJump;
@@ -62,6 +65,9 @@ namespace Demo
 		protected override void LoadContent ()
 		{
 			this.spriteBatch = new SpriteBatch (this.graphicsDeviceManager.GraphicsDevice);
+
+			this.spinosaurusSkeleton = this.LoadSkeleton("spinosaurus.png", "spinosaurus.json", "spinosaurus-skeleton.json");
+			this.spinosaurusAnimation = this.spinosaurusSkeleton.Data.FindAnimation ("animation");
 
 			this.crabSkeleton = this.LoadSkeleton("crab.png", "crab.json", "crab-skeleton.json");
 			this.crabAnimationWalk = this.crabSkeleton.Data.FindAnimation ("WalkLeft");
@@ -115,22 +121,26 @@ namespace Demo
 			switch (animation)
 			{
 				case 0:
-					this.Animate(this.spineBoySkeleton, this.spineBoyAnimationWalk);
+					this.Animate(this.spinosaurusSkeleton, this.spinosaurusAnimation);
 					break;
 					
 				case 1:
+					this.Animate(this.spineBoySkeleton, this.spineBoyAnimationWalk);
+					break;
+					
+				case 2:
 					this.Animate(this.spineBoySkeleton, this.spineBoyAnimationJump);
 					break;
 
-				case 2:
+				case 3:
 					this.Animate(this.dragonSkeleton, this.dragonAnimationFly);
 					break;
 
-				case 3:
+				case 4:
 					this.Animate(this.crabSkeleton, this.crabAnimationJump);
 					break;
 
-				case 4:
+				case 5:
 					this.Animate(this.crabSkeleton, this.crabAnimationWalk);
 					break;
 
@@ -156,7 +166,7 @@ namespace Demo
 					TouchPanel.ReadGesture();
 				}
 
-				if (++animation > 4)
+				if (++animation > 5)
 				{
 					animation = 0;
 				}
@@ -176,20 +186,26 @@ namespace Demo
 			switch (animation)
 			{
 				case 0:
+					skeleton = this.spinosaurusSkeleton;
+					x = 400;
+					y = 900;
+					break;
+
 				case 1:
+				case 2:
 					skeleton = this.spineBoySkeleton;
 					x = 400;
 					y = 600;
 					break;
 
-				case 2:
+				case 3:
 					skeleton = this.dragonSkeleton;
 					x = 500;
 					y = 650;
 					break;
 
-				case 3:
 				case 4:
+				case 5:
 					skeleton = this.crabSkeleton;
 					x = 500;
 					y = 750;

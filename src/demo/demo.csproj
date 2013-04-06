@@ -124,5 +124,8 @@
     <Content Include="Content\crab-skeleton.json" />
     <Content Include="Content\goblin.json" />
     <Content Include="Content\goblin.png" />
+    <Content Include="Content\spinosaurus.png" />
+    <Content Include="Content\spinosaurus-skeleton.json" />
+    <Content Include="Content\spinosaurus.json" />
   </ItemGroup>
 </Project>
