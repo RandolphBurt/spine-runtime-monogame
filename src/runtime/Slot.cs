@@ -32,7 +32,7 @@ namespace Spine.Runtime.MonoGame
 			this.Data = data;
 			this.Skeleton = skeleton;
 			this.Bone = bone;
-			this.Color = new Color (1, 1, 1, 1);
+			this.Color = new Color (1f, 1f, 1f, 1f);
 			this.SetToBindPose ();
 		}
 
