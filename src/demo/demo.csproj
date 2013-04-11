@@ -100,19 +100,23 @@
     <Compile Include="AnimationDemo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\runtime\spine.runtime.monogame.iOS.csproj">
-      <Project>{56F12DED-3931-4F30-8672-880FBC6AE73D}</Project>
-      <Name>spine.runtime.monogame.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">
       <Project>{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}</Project>
       <Name>MonoGame.Framework.iOS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\spine-runtimes\spine-xna-xamarin-ios\spine-xna-xamarin-ios.csproj">
+      <Project>{EB3D940F-0471-4271-A0F0-E5A67594EFA0}</Project>
+      <Name>spine-xna-xamarin-ios</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\spine-runtimes\spine-csharp-xamarin-ios\spine-csharp-xamarin-ios.csproj">
+      <Project>{08DC311B-1F38-4CBD-B7B6-B734984A8CB3}</Project>
+      <Name>spine-csharp-xamarin-ios</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Content Include="Content\crab.json" />
-    <Content Include="Content\crab.png" />
     <Content Include="Content\crab-skeleton.json" />
+    <Content Include="Content\crab.atlas" />
+    <Content Include="Content\crab.png" />
   </ItemGroup>
 </Project>

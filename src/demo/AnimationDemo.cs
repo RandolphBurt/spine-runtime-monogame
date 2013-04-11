@@ -4,14 +4,13 @@
 /// </summary>
 namespace Demo
 {
+	using Spine;
 	using System.Collections.Generic;
+	using System.IO;
+
 	using Microsoft.Xna.Framework;
 	using Microsoft.Xna.Framework.Graphics;
 	using Microsoft.Xna.Framework.Input.Touch;
-	using Spine.Runtime.MonoGame;
-	using Spine.Runtime.MonoGame.Attachments;
-	using Spine.Runtime.MonoGame.Graphics;
-	using Spine.Runtime.MonoGame.Json;
 
 	public class AnimationDemo : Game
 	{
@@ -19,6 +18,7 @@ namespace Demo
 		private Texture2D lineTexture;
 		private List<Texture2D> textureMaps;
 		private SpriteBatch spriteBatch;
+		private SkeletonRenderer skeletonRenderer;
 		private Skeleton skeleton;
 		private Animation animationWalk;
 		private Animation animationJump;
@@ -50,18 +50,10 @@ namespace Demo
 
 		protected override void LoadContent ()
 		{
-			this.spriteBatch = new SpriteBatch (this.graphicsDeviceManager.GraphicsDevice);
-
-			var crabTextureMap = Content.Load<Texture2D> ("crab.png");
-			this.textureMaps.Add (crabTextureMap);
-
-			var texturePackerReader = new TextureMapJsonReader ();			
-			var textureAtlas = texturePackerReader.ReadTextureJsonFile ("Content/crab.json", crabTextureMap);
-
-			var skeletonReader = new SkeletonJsonReader (new TextureAtlasAttachmentLoader (textureAtlas));
-			this.skeleton = skeletonReader.ReadSkeletonJsonFile ("Content/crab-skeleton.json");
-			this.skeleton.FlipY = true;
-
+			skeletonRenderer = new SkeletonRenderer(GraphicsDevice);
+			Atlas atlas = new Atlas(GraphicsDevice, "Content/crab.atlas");
+			SkeletonJson json = new SkeletonJson(atlas);
+			skeleton = new Skeleton(json.readSkeletonData("crab", File.ReadAllText("Content/crab-skeleton.json")));
 			this.animationWalk = skeleton.Data.FindAnimation ("WalkLeft");
 			this.animationJump = skeleton.Data.FindAnimation ("Jump");
 
@@ -78,42 +70,32 @@ namespace Demo
 
 		protected override void Draw (GameTime gameTime)
 		{
-			this.spriteBatch.Begin ();
-
 			this.GraphicsDevice.Clear (Color.CornflowerBlue);
+
+			timer += gameTime.ElapsedGameTime.Milliseconds / 1000f;
 
 			if (animation == 0)
 			{
-				this.Animate (this.animationJump);
+				this.animationJump.Apply (this.skeleton, timer, true);
 			}
 			else
 			{
-				this.Animate (this.animationWalk);
-
+				this.animationWalk.Apply (this.skeleton, timer, true);
 			}
 
-			this.spriteBatch.End ();
+			this.skeleton.UpdateWorldTransform ();
+			this.skeletonRenderer.Begin();
+			//this.skeleton.DrawDebug(this.spriteBatch, this.lineTexture);
+			this.skeletonRenderer.Draw(this.skeleton);
+			this.skeletonRenderer.End();
 
 			base.Draw (gameTime);
-		}
-		
-		private void Animate (Animation animation)
-		{
-			// In reality you'd use the gameTime to calculate the animation but this is for demonstration purposes.
-			// Also you'd probably do the calculations in Update and not Draw
-			animation.Apply (this.skeleton, timer++ / 100, true);
-			
-			this.skeleton.UpdateWorldTransform ();
-			this.skeleton.Draw (this.spriteBatch);
-			//this.skeleton.DrawDebug(this.spriteBatch, this.lineTexture);
 		}
 
 		private void SetSkeletonStartPosition ()
 		{
-			this.skeleton.SetToBindPose ();
-			Bone root = skeleton.GetRootBone ();
-			root.X = 500;
-			root.Y = 700;
+			this.skeleton.RootBone.X = 500;
+			this.skeleton.RootBone.Y = 700;
 			
 			this.skeleton.UpdateWorldTransform ();
 		}
