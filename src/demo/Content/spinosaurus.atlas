@@ -1,0 +1,46 @@
+spinosaurus.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+logo
+  rotate: true
+  xy: 1684, 2
+  size: 323, 917
+  orig: 917, 323
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 1684, 921
+  size: 218, 77
+  orig: 218, 77
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 2, 2
+  size: 1680, 1050
+  orig: 1680, 1050
+  offset: 0, 0
+  index: -1
+quit
+  rotate: true
+  xy: 1904, 921
+  size: 77, 216
+  orig: 216, 77
+  offset: 0, 0
+  index: -1
+leaves
+  rotate: false
+  xy: 2, 1448
+  size: 1042, 522
+  orig: 1042, 522
+  offset: 0, 0
+  index: -1
+settings
+  rotate: true
+  xy: 1684, 1000
+  size: 76, 446
+  orig: 446, 76
+  offset: 0, 0
+  index: -1

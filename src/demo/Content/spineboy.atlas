@@ -1,0 +1,165 @@
+spineboy.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+left-ankle
+  rotate: false
+  xy: 178, 206
+  size: 25, 32
+  orig: 25, 32
+  offset: 0, 0
+  index: -1
+left-lower-leg
+  rotate: false
+  xy: 205, 152
+  size: 49, 64
+  orig: 49, 64
+  offset: 0, 0
+  index: -1
+left-pant-bottom
+  rotate: true
+  xy: 230, 2
+  size: 22, 44
+  orig: 44, 22
+  offset: 0, 0
+  index: -1
+right-shoulder
+  rotate: false
+  xy: 124, 206
+  size: 52, 51
+  orig: 52, 51
+  offset: 0, 0
+  index: -1
+right-ankle
+  rotate: false
+  xy: 178, 240
+  size: 25, 30
+  orig: 25, 30
+  offset: 0, 0
+  index: -1
+right-pant-bottom
+  rotate: false
+  xy: 208, 95
+  size: 46, 18
+  orig: 46, 18
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 2, 2
+  size: 132, 121
+  orig: 121, 132
+  offset: 0, 0
+  index: -1
+eyes
+  rotate: false
+  xy: 57, 210
+  size: 34, 27
+  orig: 34, 27
+  offset: 0, 0
+  index: -1
+eyes-closed
+  rotate: true
+  xy: 93, 210
+  size: 27, 34
+  orig: 34, 27
+  offset: 0, 0
+  index: -1
+torso
+  rotate: true
+  xy: 136, 2
+  size: 92, 68
+  orig: 68, 92
+  offset: 0, 0
+  index: -1
+right-foot
+  rotate: false
+  xy: 2, 125
+  size: 67, 30
+  orig: 67, 30
+  offset: 0, 0
+  index: -1
+left-foot
+  rotate: false
+  xy: 2, 157
+  size: 65, 30
+  orig: 65, 30
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 205, 249
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: -1
+left-shoulder
+  rotate: true
+  xy: 69, 174
+  size: 53, 34
+  orig: 34, 53
+  offset: 0, 0
+  index: -1
+right-upper-leg
+  rotate: true
+  xy: 136, 72
+  size: 70, 44
+  orig: 44, 70
+  offset: 0, 0
+  index: -1
+left-arm
+  rotate: false
+  xy: 205, 218
+  size: 35, 29
+  orig: 35, 29
+  offset: 0, 0
+  index: -1
+left-hand
+  rotate: true
+  xy: 208, 115
+  size: 38, 35
+  orig: 35, 38
+  offset: 0, 0
+  index: -1
+right-arm
+  rotate: false
+  xy: 230, 48
+  size: 21, 45
+  orig: 21, 45
+  offset: 0, 0
+  index: -1
+right-foot-idle
+  rotate: false
+  xy: 2, 189
+  size: 53, 28
+  orig: 53, 28
+  offset: 0, 0
+  index: -1
+right-lower-leg
+  rotate: true
+  xy: 136, 153
+  size: 64, 51
+  orig: 51, 64
+  offset: 0, 0
+  index: -1
+pelvis
+  rotate: false
+  xy: 71, 125
+  size: 63, 47
+  orig: 63, 47
+  offset: 0, 0
+  index: -1
+left-upper-leg
+  rotate: true
+  xy: 136, 118
+  size: 67, 33
+  orig: 33, 67
+  offset: 0, 0
+  index: -1
+right-hand
+  rotate: false
+  xy: 2, 219
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

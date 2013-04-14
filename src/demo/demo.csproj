@@ -83,9 +83,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -100,32 +97,35 @@
     <Compile Include="AnimationDemo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\runtime\spine.runtime.monogame.iOS.csproj">
-      <Project>{56F12DED-3931-4F30-8672-880FBC6AE73D}</Project>
-      <Name>spine.runtime.monogame.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.iOS.csproj">
       <Project>{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}</Project>
       <Name>MonoGame.Framework.iOS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\spine-runtimes\spine-xna-xamarin-ios\spine-xna-xamarin-ios.csproj">
+      <Project>{EB3D940F-0471-4271-A0F0-E5A67594EFA0}</Project>
+      <Name>spine-xna-xamarin-ios</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\spine-runtimes\spine-csharp-xamarin-ios\spine-csharp-xamarin-ios.csproj">
+      <Project>{08DC311B-1F38-4CBD-B7B6-B734984A8CB3}</Project>
+      <Name>spine-csharp-xamarin-ios</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Content Include="Content\crab.json" />
     <Content Include="Content\crab.png" />
-    <Content Include="Content\dragon.json" />
     <Content Include="Content\dragon.png" />
-    <Content Include="Content\dragon-skeleton.json" />
-    <Content Include="Content\goblins-skeleton.json" />
-    <Content Include="Content\goblins-walk.json" />
-    <Content Include="Content\spineboy.json" />
     <Content Include="Content\spineboy.png" />
-    <Content Include="Content\spineboy-skeleton.json" />
-    <Content Include="Content\crab-skeleton.json" />
-    <Content Include="Content\goblin.json" />
     <Content Include="Content\goblin.png" />
     <Content Include="Content\spinosaurus.png" />
-    <Content Include="Content\spinosaurus-skeleton.json" />
+    <Content Include="Content\crab.atlas" />
+    <Content Include="Content\dragon.atlas" />
+    <Content Include="Content\goblin.atlas" />
+    <Content Include="Content\spineboy.atlas" />
+    <Content Include="Content\spinosaurus.atlas" />
+    <Content Include="Content\crab.json" />
+    <Content Include="Content\dragon.json" />
+    <Content Include="Content\spineboy.json" />
     <Content Include="Content\spinosaurus.json" />
+    <Content Include="Content\goblin.json" />
   </ItemGroup>
 </Project>

@@ -4,15 +4,12 @@
 /// </summary>
 namespace Demo
 {
+	using Spine;
 	using System.Collections.Generic;
 
 	using Microsoft.Xna.Framework;
 	using Microsoft.Xna.Framework.Graphics;
 	using Microsoft.Xna.Framework.Input.Touch;
-	using Spine.Runtime.MonoGame;
-	using Spine.Runtime.MonoGame.Attachments;
-	using Spine.Runtime.MonoGame.Graphics;
-	using Spine.Runtime.MonoGame.Json;
 
 	public class AnimationDemo : Game
 	{
@@ -21,6 +18,7 @@ namespace Demo
 		private List<Texture2D> textureMaps;
 
 		private SpriteBatch spriteBatch;
+		private SkeletonRenderer skeletonRenderer;
 
 		private Skeleton spinosaurusSkeleton;
 		private Animation spinosaurusAnimation;
@@ -38,6 +36,10 @@ namespace Demo
 
 		private Skeleton goblinSkeleton;
 		private Animation goblinAnimationWalk;
+
+		private int currentAnimation = 0;
+		
+		private float timer = 0;
 
 		public AnimationDemo ()
 		{
@@ -63,62 +65,60 @@ namespace Demo
 		}
 
 		protected override void LoadContent ()
-		{
+		{				
 			this.spriteBatch = new SpriteBatch (this.graphicsDeviceManager.GraphicsDevice);
 
-			this.spinosaurusSkeleton = this.LoadSkeleton("spinosaurus.png", "spinosaurus.json", "spinosaurus-skeleton.json");
-			this.spinosaurusAnimation = this.spinosaurusSkeleton.Data.FindAnimation ("animation");
-
-			this.crabSkeleton = this.LoadSkeleton("crab.png", "crab.json", "crab-skeleton.json");
+			this.crabSkeleton = this.LoadSkeleton("crab.png", "crab.atlas", "crab.json");
 			this.crabAnimationWalk = this.crabSkeleton.Data.FindAnimation ("WalkLeft");
 			this.crabAnimationJump = this.crabSkeleton.Data.FindAnimation ("Jump");
 
-			this.dragonSkeleton = this.LoadSkeleton("dragon.png", "dragon.json", "dragon-skeleton.json");
+			this.spinosaurusSkeleton = this.LoadSkeleton("spinosaurus.png", "spinosaurus.atlas", "spinosaurus.json");
+			this.spinosaurusAnimation = this.spinosaurusSkeleton.Data.FindAnimation ("animation");
+			
+			this.dragonSkeleton = this.LoadSkeleton("dragon.png", "dragon.atlas", "dragon.json");
 			this.dragonAnimationFly = this.dragonSkeleton.Data.FindAnimation("flying");
 
-//			this.goblinSkeleton = this.LoadSkeleton("goblin.png", "goblin.json", "goblins-skeleton.json", 400, 700);
-//			this.goblinAnimationWalk = this.goblinSkeleton.Data.FindAnimation(goblins-walk");
+			this.goblinSkeleton = this.LoadSkeleton("goblin.png", "goblin.atlas", "goblin.json");
+			this.goblinAnimationWalk = this.goblinSkeleton.Data.FindAnimation("walk");
 
-			this.spineBoySkeleton = this.LoadSkeleton("spineboy.png", "spineboy.json", "spineboy-skeleton.json");
+			this.spineBoySkeleton = this.LoadSkeleton("spineboy.png", "spineboy.atlas", "spineboy.json");
 			this.spineBoyAnimationWalk = this.spineBoySkeleton.Data.FindAnimation("walk");
 			this.spineBoyAnimationJump = this.spineBoySkeleton.Data.FindAnimation("jump");
+
+			skeletonRenderer = new SkeletonRenderer(GraphicsDevice);
+
+			this.currentAnimation = 0;
+			this.SetSkeletonStartPosition ();
 
 			this.lineTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			this.lineTexture.SetData(new[]{Color.White});
 			this.textureMaps.Add(lineTexture);
 
-			this.animation = 0;
-			this.SetSkeletonStartPosition();
-
 			base.LoadContent ();
 		}
 
-		private Skeleton LoadSkeleton(string textureGraphicsFile, string textureJsonFile, string skeletonJsonFile)
+		private Skeleton LoadSkeleton(string textureGraphicsFile, string textureAtlasFile, string skeletonJsonFile)
 		{
-			var textureMap = Content.Load<Texture2D>(textureGraphicsFile);
-			this.textureMaps.Add (textureMap);
+			Texture2D texture = Util.LoadTexture(GraphicsDevice, "Content/" + textureGraphicsFile);
+			this.textureMaps.Add(texture);
+			Atlas atlas = new Atlas("Content/" + textureAtlasFile, texture, texture.Width, texture.Height);
 			
-			var texturePackerReader = new TextureMapJsonReader ();			
-			var textureAtlas = texturePackerReader.ReadTextureJsonFile("Content/" + textureJsonFile, textureMap);
-			
-			var skeletonReader = new SkeletonJsonReader(new TextureAtlasAttachmentLoader( textureAtlas));
-			var skeleton = skeletonReader.ReadSkeletonJsonFile("Content/" + skeletonJsonFile);
-			skeleton.FlipY = true;
+			SkeletonJson json = new SkeletonJson(atlas);
+			var skeleton = new Skeleton(json.ReadSkeletonData("Content/" + skeletonJsonFile));
+
+			// Without this the skin attachments won't be attached. See SetSkin.
+			skeleton.SetSlotsToBindPose(); 
 
 			return skeleton;
 		}
 
-		private int animation = 0;
-
-		private float timer = 1;
-
 		protected override void Draw (GameTime gameTime)
 		{
-			this.spriteBatch.Begin ();
-
 			this.GraphicsDevice.Clear (Color.CornflowerBlue);
 
-			switch (animation)
+			timer += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+
+			switch (currentAnimation)
 			{
 				case 0:
 					this.Animate(this.spinosaurusSkeleton, this.spinosaurusAnimation);
@@ -137,24 +137,23 @@ namespace Demo
 					break;
 
 				case 4:
-					this.Animate(this.crabSkeleton, this.crabAnimationJump);
-					break;
-
-				case 5:
-					this.Animate(this.crabSkeleton, this.crabAnimationWalk);
-					break;
-
-					/*
 				case 5:
 					this.Animate(this.goblinSkeleton, this.goblinAnimationWalk);
 					break;
-					*/
-			}
 
-			this.spriteBatch.End ();
+				case 6:
+					this.Animate(this.crabSkeleton, this.crabAnimationJump);
+					break;
+
+				case 7:
+					this.Animate(this.crabSkeleton, this.crabAnimationWalk);
+					break;
+			}
 
 			base.Draw (gameTime);
 		}
+
+		// Switch animations whenever the user touches the screen
 
 		protected override void Update (GameTime gameTime)
 		{
@@ -166,9 +165,9 @@ namespace Demo
 					TouchPanel.ReadGesture();
 				}
 
-				if (++animation > 5)
+				if (++currentAnimation > 7)
 				{
-					animation = 0;
+					currentAnimation = 0;
 				}
 
 				this.SetSkeletonStartPosition();
@@ -183,7 +182,7 @@ namespace Demo
 			int y = 0;
 			Skeleton skeleton = null;
 
-			switch (animation)
+			switch (currentAnimation)
 			{
 				case 0:
 					skeleton = this.spinosaurusSkeleton;
@@ -205,7 +204,21 @@ namespace Demo
 					break;
 
 				case 4:
+					skeleton = this.goblinSkeleton;
+					skeleton.SetSkin("goblingirl");
+					x = 320;
+					y = 440;
+					break;
+
 				case 5:
+					skeleton = this.goblinSkeleton;
+					skeleton.SetSkin("goblin");
+					x = 320;
+					y = 440;
+					break;
+
+				case 6:
+				case 7:
 					skeleton = this.crabSkeleton;
 					x = 500;
 					y = 750;
@@ -214,20 +227,21 @@ namespace Demo
 
 			skeleton.SetToBindPose();
 
-			var root = skeleton.GetRootBone();
-			root.X = x;
-			root.Y = y;
-			
+			skeleton.RootBone.X = x;
+			skeleton.RootBone.Y = y;
+
 			skeleton.UpdateWorldTransform();
 		}
 
 		private void Animate(Skeleton skeleton, Animation animation)
-		{
-			animation.Apply(skeleton, timer++ / 100, true);
+		{	
+			animation.Apply (skeleton, timer, true);
 
-			skeleton.UpdateWorldTransform();
-			skeleton.Draw(this.spriteBatch);
-			//skeleton.DrawDebug(this.spriteBatch, this.lineTexture);
+			skeleton.UpdateWorldTransform ();
+			this.skeletonRenderer.Begin();
+			//this.skeleton.DrawDebug(this.spriteBatch, this.lineTexture);
+			this.skeletonRenderer.Draw(skeleton);
+			this.skeletonRenderer.End();
 		}
 
 		protected override void Dispose (bool disposing)
