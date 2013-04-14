@@ -51,11 +51,16 @@ namespace Demo
 		protected override void LoadContent ()
 		{
 			skeletonRenderer = new SkeletonRenderer(GraphicsDevice);
-			Atlas atlas = new Atlas(GraphicsDevice, "Content/crab.atlas");
+
+			Texture2D texture = Util.LoadTexture(GraphicsDevice, "Content/crab.png");
+			Atlas atlas = new Atlas("Content/crab.atlas", texture, texture.Width, texture.Height);
+
 			SkeletonJson json = new SkeletonJson(atlas);
-			skeleton = new Skeleton(json.readSkeletonData("crab", File.ReadAllText("Content/crab-skeleton.json")));
+			this.skeleton = new Skeleton(json.ReadSkeletonData("Content/crab-skeleton.json"));
 			this.animationWalk = skeleton.Data.FindAnimation ("WalkLeft");
 			this.animationJump = skeleton.Data.FindAnimation ("Jump");
+
+			this.skeleton.SetSlotsToBindPose(); // Without this the skin attachments won't be attached. See SetSkin.
 
 			this.animation = 0;
 			this.SetSkeletonStartPosition ();
