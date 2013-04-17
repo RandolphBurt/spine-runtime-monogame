@@ -52,8 +52,7 @@ namespace Demo
 		{
 			skeletonRenderer = new SkeletonRenderer(GraphicsDevice);
 
-			Texture2D texture = Util.LoadTexture(GraphicsDevice, "Content/crab.png");
-			Atlas atlas = new Atlas("Content/crab.atlas", texture, texture.Width, texture.Height);
+			Atlas atlas = new Atlas("Content/crab.atlas", new XnaTextureLoader(GraphicsDevice));
 
 			SkeletonJson json = new SkeletonJson(atlas);
 			this.skeleton = new Skeleton(json.ReadSkeletonData("Content/crab-skeleton.json"));
