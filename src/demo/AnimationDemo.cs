@@ -99,10 +99,8 @@ namespace Demo
 
 		private Skeleton LoadSkeleton(string textureGraphicsFile, string textureAtlasFile, string skeletonJsonFile)
 		{
-			Texture2D texture = Util.LoadTexture(GraphicsDevice, "Content/" + textureGraphicsFile);
-			this.textureMaps.Add(texture);
-			Atlas atlas = new Atlas("Content/" + textureAtlasFile, texture, texture.Width, texture.Height);
-			
+			Atlas atlas = new Atlas("Content/" + textureAtlasFile, new XnaTextureLoader(GraphicsDevice));
+
 			SkeletonJson json = new SkeletonJson(atlas);
 			var skeleton = new Skeleton(json.ReadSkeletonData("Content/" + skeletonJsonFile));
 
