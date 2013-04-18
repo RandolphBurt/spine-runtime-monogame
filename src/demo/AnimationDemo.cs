@@ -16,6 +16,7 @@ namespace Demo
 		private readonly GraphicsDeviceManager graphicsDeviceManager;
 		private Texture2D lineTexture;
 		private List<Texture2D> textureMaps;
+		private List<Atlas> atlasList;
 
 		private SpriteBatch spriteBatch;
 		private SkeletonRenderer skeletonRenderer;
@@ -53,6 +54,7 @@ namespace Demo
 				DisplayOrientation.Portrait;
 
 			this.textureMaps = new List<Texture2D> ();
+			this.atlasList = new List<Atlas>();
 
 			this.Content.RootDirectory = "Content";
 		}
@@ -100,6 +102,7 @@ namespace Demo
 		private Skeleton LoadSkeleton(string textureGraphicsFile, string textureAtlasFile, string skeletonJsonFile)
 		{
 			Atlas atlas = new Atlas("Content/" + textureAtlasFile, new XnaTextureLoader(GraphicsDevice));
+			this.atlasList.Add(atlas);
 
 			SkeletonJson json = new SkeletonJson(atlas);
 			var skeleton = new Skeleton(json.ReadSkeletonData("Content/" + skeletonJsonFile));
@@ -255,6 +258,19 @@ namespace Demo
 				}
 			
 				this.textureMaps = null;
+			}
+
+			if (this.atlasList != null)
+			{
+				foreach (var atlas in this.atlasList)
+				{
+					if (atlas != null)
+					{
+						atlas.Dispose ();
+					}
+				}
+				
+				this.atlasList = null;
 			}
 
 			base.Dispose (disposing);
