@@ -22,6 +22,7 @@ namespace Demo
 		private Skeleton skeleton;
 		private Animation animationWalk;
 		private Animation animationJump;
+		private Atlas atlas;
 		private int animation = 0;
 		private float timer = 1;
 
@@ -52,7 +53,7 @@ namespace Demo
 		{
 			skeletonRenderer = new SkeletonRenderer(GraphicsDevice);
 
-			Atlas atlas = new Atlas("Content/crab.atlas", new XnaTextureLoader(GraphicsDevice));
+			this.atlas = new Atlas("Content/crab.atlas", new XnaTextureLoader(GraphicsDevice));
 
 			SkeletonJson json = new SkeletonJson(atlas);
 			this.skeleton = new Skeleton(json.ReadSkeletonData("Content/crab-skeleton.json"));
@@ -140,6 +141,9 @@ namespace Demo
 			
 				this.textureMaps = null;
 			}
+
+			this.atlas.Dispose();
+			this.atlas = null;
 
 			base.Dispose (disposing);
 		}
