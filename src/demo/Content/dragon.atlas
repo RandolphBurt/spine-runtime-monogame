@@ -5,14 +5,14 @@ repeat: none
 L_wing04
   rotate: true
   xy: 887, 573
-  size: 135, 188
+  size: 188, 135
   orig: 188, 135
   offset: 0, 0
   index: -1
 tail05
   rotate: true
   xy: 309, 298
-  size: 59, 52
+  size: 52, 59
   orig: 52, 59
   offset: 0, 0
   index: -1
@@ -33,7 +33,7 @@ L_wing01
 R_wing08
   rotate: true
   xy: 2, 1107
-  size: 254, 234
+  size: 234, 254
   orig: 234, 254
   offset: 0, 0
   index: -1
@@ -54,14 +54,14 @@ R_wing05
 L_wing06
   rotate: true
   xy: 370, 96
-  size: 331, 192
+  size: 192, 331
   orig: 192, 331
   offset: 0, 0
   index: -1
 L_wing03
   rotate: true
   xy: 682, 354
-  size: 207, 186
+  size: 186, 207
   orig: 186, 207
   offset: 0, 0
   index: -1
@@ -75,7 +75,7 @@ R_rear_thigh
 R_wing07
   rotate: true
   xy: 273, 906
-  size: 263, 200
+  size: 200, 263
   orig: 200, 263
   offset: 0, 0
   index: -1
@@ -89,7 +89,7 @@ L_front_thigh
 front_toeB
   rotate: true
   xy: 309, 438
-  size: 57, 56
+  size: 56, 57
   orig: 56, 57
   offset: 0, 0
   index: -1
@@ -110,14 +110,14 @@ logo
 tail03
   rotate: true
   xy: 574, 818
-  size: 92, 73
+  size: 73, 92
   orig: 73, 92
   offset: 0, 0
   index: -1
 R_wing02
   rotate: true
   xy: 2, 298
-  size: 305, 203
+  size: 203, 305
   orig: 203, 305
   offset: 0, 0
   index: -1
@@ -131,7 +131,7 @@ R_rear_leg
 L_wing08
   rotate: true
   xy: 511, 1334
-  size: 181, 164
+  size: 164, 181
   orig: 164, 181
   offset: 0, 0
   index: -1
@@ -152,21 +152,21 @@ L_wing05
 R_wing09
   rotate: true
   xy: 677, 721
-  size: 204, 248
+  size: 248, 204
   orig: 248, 204
   offset: 0, 0
   index: -1
 L_wing07
   rotate: true
   xy: 2, 946
-  size: 255, 159
+  size: 159, 255
   orig: 159, 255
   offset: 0, 0
   index: -1
 L_front_leg
   rotate: true
   xy: 309, 352
-  size: 57, 84
+  size: 84, 57
   orig: 84, 57
   offset: 0, 0
   index: -1
@@ -208,21 +208,21 @@ R_wing04
 chest
   rotate: true
   xy: 896, 157
-  size: 122, 136
+  size: 136, 122
   orig: 136, 122
   offset: 0, 0
   index: -1
 R_wing01
   rotate: true
   xy: 370, 290
-  size: 310, 219
+  size: 219, 310
   orig: 219, 310
   offset: 0, 0
   index: -1
 L_wing02
   rotate: true
   xy: 2, 765
-  size: 269, 179
+  size: 179, 269
   orig: 179, 269
   offset: 0, 0
   index: -1
@@ -236,7 +236,7 @@ R_front_leg
 R_wing06
   rotate: true
   xy: 2, 96
-  size: 366, 200
+  size: 200, 366
   orig: 200, 366
   offset: 0, 0
   index: -1
@@ -271,7 +271,7 @@ L_wing09
 tail02
   rotate: true
   xy: 896, 295
-  size: 120, 95
+  size: 95, 120
   orig: 95, 120
   offset: 0, 0
   index: -1

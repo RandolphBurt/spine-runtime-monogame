@@ -5,7 +5,7 @@ repeat: none
 logo
   rotate: true
   xy: 1684, 2
-  size: 323, 917
+  size: 917, 323
   orig: 917, 323
   offset: 0, 0
   index: -1
@@ -26,7 +26,7 @@ background
 quit
   rotate: true
   xy: 1904, 921
-  size: 77, 216
+  size: 216, 77
   orig: 216, 77
   offset: 0, 0
   index: -1
@@ -40,7 +40,7 @@ leaves
 settings
   rotate: true
   xy: 1684, 1000
-  size: 76, 446
+  size: 446, 76
   orig: 446, 76
   offset: 0, 0
   index: -1
