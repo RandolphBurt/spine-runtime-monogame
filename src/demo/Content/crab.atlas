@@ -26,7 +26,7 @@ BackLowerLegLeft
 ClawLowerRight
   rotate: true
   xy: 2, 164
-  size: 140, 73
+  size: 73, 140
   orig: 73, 140
   offset: 0, 0
   index: -1
@@ -47,7 +47,7 @@ ClawLowerLeft
 FrontLowerLegRight
   rotate: true
   xy: 144, 164
-  size: 85, 41
+  size: 41, 85
   orig: 41, 85
   offset: 0, 0
   index: -1
@@ -61,7 +61,7 @@ EyeRight
 FrontUpperLegLeft
   rotate: true
   xy: 148, 437
-  size: 62, 72
+  size: 72, 62
   orig: 72, 62
   offset: 0, 0
   index: -1
@@ -75,7 +75,7 @@ ClawNoTeethLeft
 ClawTeethRight
   rotate: true
   xy: 2, 239
-  size: 139, 111
+  size: 111, 139
   orig: 111, 139
   offset: 0, 0
   index: -1
@@ -96,49 +96,49 @@ EyeLidRight
 ClawTeethLeft
   rotate: true
   xy: 247, 2
-  size: 156, 89
+  size: 89, 156
   orig: 89, 156
   offset: 0, 0
   index: -1
 ClawNoTeethRight
   rotate: true
   xy: 405, 2
-  size: 86, 130
+  size: 130, 86
   orig: 130, 86
   offset: 0, 0
   index: -1
 BackUpperLegLeft
   rotate: true
   xy: 254, 335
-  size: 38, 70
+  size: 70, 38
   orig: 70, 38
   offset: 0, 0
   index: -1
 FrontUpperLegRight
   rotate: true
   xy: 84, 437
-  size: 62, 72
+  size: 72, 62
   orig: 72, 62
   offset: 0, 0
   index: -1
 FrontLowerLegLeft
   rotate: true
   xy: 144, 207
-  size: 85, 41
+  size: 41, 85
   orig: 41, 85
   offset: 0, 0
   index: -1
 EyeLidLeft
   rotate: true
   xy: 212, 420
-  size: 31, 71
+  size: 71, 31
   orig: 71, 31
   offset: 0, 0
   index: -1
 BackUpperLegRight
   rotate: true
   xy: 245, 420
-  size: 38, 70
+  size: 70, 38
   orig: 70, 38
   offset: 0, 0
   index: -1
