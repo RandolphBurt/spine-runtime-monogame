@@ -60,7 +60,7 @@ namespace Demo
 			this.animationWalk = skeleton.Data.FindAnimation ("WalkLeft");
 			this.animationJump = skeleton.Data.FindAnimation ("Jump");
 
-			this.skeleton.SetSlotsToBindPose(); // Without this the skin attachments won't be attached. See SetSkin.
+			this.skeleton.SetSlotsToSetupPose(); // Without this the skin attachments won't be attached. See SetSkin.
 
 			this.animation = 0;
 			this.SetSkeletonStartPosition ();
