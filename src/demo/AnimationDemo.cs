@@ -108,7 +108,7 @@ namespace Demo
 			var skeleton = new Skeleton(json.ReadSkeletonData("Content/" + skeletonJsonFile));
 
 			// Without this the skin attachments won't be attached. See SetSkin.
-			skeleton.SetSlotsToBindPose(); 
+			skeleton.SetSlotsToSetupPose(); 
 
 			return skeleton;
 		}
@@ -226,7 +226,7 @@ namespace Demo
 					break;
 			}
 
-			skeleton.SetToBindPose();
+			skeleton.SetToSetupPose();
 
 			skeleton.RootBone.X = x;
 			skeleton.RootBone.Y = y;
