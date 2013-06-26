@@ -187,7 +187,7 @@ namespace Demo
 			{
 				case 0:
 					skeleton = this.spinosaurusSkeleton;
-					x = 400;
+					x = 500;
 					y = 900;
 					break;
 
@@ -207,15 +207,15 @@ namespace Demo
 				case 4:
 					skeleton = this.goblinSkeleton;
 					skeleton.SetSkin("goblingirl");
-					x = 320;
-					y = 440;
+					x = 420;
+					y = 540;
 					break;
 
 				case 5:
 					skeleton = this.goblinSkeleton;
 					skeleton.SetSkin("goblin");
-					x = 320;
-					y = 440;
+					x = 420;
+					y = 540;
 					break;
 
 				case 6:
