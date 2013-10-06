@@ -40,6 +40,7 @@ namespace Demo
 
 		private int currentAnimation = 0;
 		
+		private float lastTimer = 0;
 		private float timer = 0;
 
 		public AnimationDemo ()
@@ -117,6 +118,7 @@ namespace Demo
 		{
 			this.GraphicsDevice.Clear (Color.CornflowerBlue);
 
+			lastTimer = timer;
 			timer += gameTime.ElapsedGameTime.Milliseconds / 1000f;
 
 			switch (currentAnimation)
@@ -236,7 +238,7 @@ namespace Demo
 
 		private void Animate(Skeleton skeleton, Animation animation)
 		{	
-			animation.Apply (skeleton, timer, true);
+			animation.Apply (skeleton, lastTimer, timer, true, null);
 
 			skeleton.UpdateWorldTransform ();
 			this.skeletonRenderer.Begin();
