@@ -77,15 +77,16 @@ namespace Demo
 		{
 			this.GraphicsDevice.Clear (Color.CornflowerBlue);
 
+			var lastTime = timer;
 			timer += gameTime.ElapsedGameTime.Milliseconds / 1000f;
 
 			if (animation == 0)
 			{
-				this.animationJump.Apply (this.skeleton, timer, true);
+				this.animationJump.Apply (this.skeleton, lastTime, timer, true, null);
 			}
 			else
 			{
-				this.animationWalk.Apply (this.skeleton, timer, true);
+				this.animationWalk.Apply (this.skeleton, lastTime, timer, true, null);
 			}
 
 			this.skeleton.UpdateWorldTransform ();
