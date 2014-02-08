@@ -230,8 +230,8 @@ namespace Demo
 
 			skeleton.SetToSetupPose();
 
-			skeleton.RootBone.X = x;
-			skeleton.RootBone.Y = y;
+			skeleton.X = x;
+			skeleton.Y = y;
 
 			skeleton.UpdateWorldTransform();
 		}
