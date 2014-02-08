@@ -100,9 +100,9 @@ namespace Demo
 
 		private void SetSkeletonStartPosition ()
 		{
-			this.skeleton.RootBone.X = 500;
-			this.skeleton.RootBone.Y = 700;
-			
+			this.skeleton.X = 500;
+			this.skeleton.Y = 800;
+
 			this.skeleton.UpdateWorldTransform ();
 		}
 
