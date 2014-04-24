@@ -18,7 +18,7 @@ namespace Demo
 		private Texture2D lineTexture;
 		private List<Texture2D> textureMaps;
 		private SpriteBatch spriteBatch;
-		private SkeletonRenderer skeletonRenderer;
+		private SkeletonRegionRenderer skeletonRenderer;
 		private Skeleton skeleton;
 		private Animation animationWalk;
 		private Animation animationJump;
@@ -51,7 +51,7 @@ namespace Demo
 
 		protected override void LoadContent ()
 		{
-			skeletonRenderer = new SkeletonRenderer(GraphicsDevice);
+			skeletonRenderer = new SkeletonRegionRenderer(GraphicsDevice);
 
 			this.atlas = new Atlas("Content/crab.atlas", new XnaTextureLoader(GraphicsDevice));
 
