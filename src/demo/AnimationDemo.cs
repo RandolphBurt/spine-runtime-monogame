@@ -19,7 +19,7 @@ namespace Demo
 		private List<Atlas> atlasList;
 
 		private SpriteBatch spriteBatch;
-		private SkeletonRenderer skeletonRenderer;
+		private SkeletonRegionRenderer skeletonRenderer;
 
 		private Skeleton spinosaurusSkeleton;
 		private Animation spinosaurusAnimation;
@@ -88,7 +88,7 @@ namespace Demo
 			this.spineBoyAnimationWalk = this.spineBoySkeleton.Data.FindAnimation("walk");
 			this.spineBoyAnimationJump = this.spineBoySkeleton.Data.FindAnimation("jump");
 
-			skeletonRenderer = new SkeletonRenderer(GraphicsDevice);
+			skeletonRenderer = new SkeletonRegionRenderer(GraphicsDevice);
 
 			this.currentAnimation = 0;
 			this.SetSkeletonStartPosition ();
@@ -190,7 +190,7 @@ namespace Demo
 				case 0:
 					skeleton = this.spinosaurusSkeleton;
 					x = 500;
-					y = 900;
+					y = 450;
 					break;
 
 				case 1:
