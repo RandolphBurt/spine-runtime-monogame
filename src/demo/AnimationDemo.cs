@@ -1,153 +1,164 @@
-/// <summary>
-/// Animation demo.
-/// 2013-March
-/// </summary>
-namespace Demo
-{
-	using Spine;
-	using System.Collections.Generic;
-	using System.IO;
+/******************************************************************************
+ * Spine Runtimes Software License
+ * Version 2.1
+ * 
+ * Copyright (c) 2013, Esoteric Software
+ * All rights reserved.
+ * 
+ * You are granted a perpetual, non-exclusive, non-sublicensable and
+ * non-transferable license to install, execute and perform the Spine Runtimes
+ * Software (the "Software") solely for internal use. Without the written
+ * permission of Esoteric Software (typically granted by licensing Spine), you
+ * may not (a) modify, translate, adapt or otherwise create derivative works,
+ * improvements of the Software or develop new applications using the Software
+ * or (b) remove, delete, alter or obscure any trademarks or any copyright,
+ * trademark, patent or other intellectual property or proprietary rights
+ * notices on or in the Software, including any copy thereof. Redistributions
+ * in binary or source form must include this license and terms.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *****************************************************************************/
 
-	using Microsoft.Xna.Framework;
-	using Microsoft.Xna.Framework.Graphics;
-	using Microsoft.Xna.Framework.Input.Touch;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Spine;
 
-	public class AnimationDemo : Game
-	{
-		private readonly GraphicsDeviceManager graphicsDeviceManager;
-		private Texture2D lineTexture;
-		private List<Texture2D> textureMaps;
-		private SpriteBatch spriteBatch;
-		private SkeletonRegionRenderer skeletonRenderer;
-		private Skeleton skeleton;
-		private Animation animationWalk;
-		private Animation animationJump;
-		private Atlas atlas;
-		private int animation = 0;
-		private float timer = 1;
+namespace Demo {
+	public class AnimationDemo : Microsoft.Xna.Framework.Game {
+		GraphicsDeviceManager graphics;
+		SkeletonMeshRenderer skeletonRenderer;
+		Skeleton skeleton;
+		Slot headSlot;
+		AnimationState state;
+		SkeletonBounds bounds = new SkeletonBounds();
 
-		public AnimationDemo ()
-		{
-			this.graphicsDeviceManager = new GraphicsDeviceManager (this);
-			this.graphicsDeviceManager.IsFullScreen = true;
+		public AnimationDemo () {
+			IsMouseVisible = true;
 
-			this.graphicsDeviceManager.SupportedOrientations = 
-				DisplayOrientation.LandscapeLeft | 
-				DisplayOrientation.LandscapeRight |
-				DisplayOrientation.PortraitDown | 
-				DisplayOrientation.Portrait;
-
-			this.textureMaps = new List<Texture2D> ();
-
-			this.Content.RootDirectory = "Content";
+			graphics = new GraphicsDeviceManager(this);
+			graphics.IsFullScreen = false;
+			graphics.PreferredBackBufferWidth = 800;
+			graphics.PreferredBackBufferHeight = 600;
 		}
 
-		protected override void Initialize ()
-		{
-			TouchPanel.EnabledGestures = GestureType.Tap;
-			
-			base.Initialize ();
+		protected override void Initialize () {
+			// TODO: Add your initialization logic here
+
+			base.Initialize();
 		}
 
-		protected override void LoadContent ()
-		{
-			skeletonRenderer = new SkeletonRegionRenderer(GraphicsDevice);
+		protected override void LoadContent () {
+			skeletonRenderer = new SkeletonMeshRenderer(GraphicsDevice);
+			skeletonRenderer.PremultipliedAlpha = true;
 
-			this.atlas = new Atlas("Content/crab.atlas", new XnaTextureLoader(GraphicsDevice));
+			// String name = "spineboy";
+			String name = "goblins-ffd";
 
+			Atlas atlas = new Atlas("Content/" + name + ".atlas", new XnaTextureLoader(GraphicsDevice));
 			SkeletonJson json = new SkeletonJson(atlas);
-			this.skeleton = new Skeleton(json.ReadSkeletonData("Content/crab-skeleton.json"));
-			this.animationWalk = skeleton.Data.FindAnimation ("WalkLeft");
-			this.animationJump = skeleton.Data.FindAnimation ("Jump");
+			if (name == "spineboy") json.Scale = 0.6f;
+			skeleton = new Skeleton(json.ReadSkeletonData("Content/" + name + ".json"));
+			if (name == "goblins-ffd") skeleton.SetSkin("goblin");
 
-			this.skeleton.SetSlotsToSetupPose(); // Without this the skin attachments won't be attached. See SetSkin.
+			// Define mixing between animations.
+			AnimationStateData stateData = new AnimationStateData(skeleton.Data);
+			state = new AnimationState(stateData);
 
-			this.animation = 0;
-			this.SetSkeletonStartPosition ();
+			if (name == "spineboy") {
+				stateData.SetMix("run", "jump", 0.2f);
+				stateData.SetMix("jump", "run", 0.4f);
 
-			// used for debugging - draw the bones
-			this.lineTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-			this.lineTexture.SetData(new[]{Color.White});
-			this.textureMaps.Add(lineTexture);
+				// Event handling for all animations.
+				state.Start += Start;
+				state.End += End;
+				state.Complete += Complete;
+				state.Event += Event;
 
-			base.LoadContent ();
-		}
-
-		protected override void Draw (GameTime gameTime)
-		{
-			this.GraphicsDevice.Clear (Color.CornflowerBlue);
-
-			var lastTime = timer;
-			timer += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-
-			if (animation == 0)
-			{
-				this.animationJump.Apply (this.skeleton, lastTime, timer, true, null);
-			}
-			else
-			{
-				this.animationWalk.Apply (this.skeleton, lastTime, timer, true, null);
+				state.SetAnimation(0, "test", false);
+				TrackEntry entry = state.AddAnimation(0, "jump", false, 0);
+				entry.End += End; // Event handling for queued animations.
+				state.AddAnimation(0, "run", true, 0);
+			} else {
+				state.SetAnimation(0, "walk", true);
 			}
 
-			this.skeleton.UpdateWorldTransform ();
-			this.skeletonRenderer.Begin();
-			//this.skeleton.DrawDebug(this.spriteBatch, this.lineTexture);
-			this.skeletonRenderer.Draw(this.skeleton);
-			this.skeletonRenderer.End();
+			skeleton.X = 400;
+			skeleton.Y = 590;
+			skeleton.UpdateWorldTransform();
 
-			base.Draw (gameTime);
+			headSlot = skeleton.FindSlot("head");
 		}
 
-		private void SetSkeletonStartPosition ()
-		{
-			this.skeleton.X = 500;
-			this.skeleton.Y = 800;
-
-			this.skeleton.UpdateWorldTransform ();
+		protected override void UnloadContent () {
+			// TODO: Unload any non ContentManager content here
 		}
 
-		// Switch animations whenever the user touches the screen
-		protected override void Update (GameTime gameTime)
-		{
-			if (TouchPanel.IsGestureAvailable)
-			{
-				while (TouchPanel.IsGestureAvailable)
-				{
-					// swallow all touches 
-					TouchPanel.ReadGesture ();
+		protected override void Update (GameTime gameTime) {
+			// Allows the game to exit
+			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+				this.Exit();
+
+			// TODO: Add your update logic here
+
+			base.Update(gameTime);
+		}
+
+		protected override void Draw (GameTime gameTime) {
+			GraphicsDevice.Clear(Color.Black);
+
+			state.Update(gameTime.ElapsedGameTime.Milliseconds / 1000f);
+			state.Apply(skeleton);
+			skeleton.UpdateWorldTransform();
+			skeletonRenderer.Begin();
+			skeletonRenderer.Draw(skeleton);
+			skeletonRenderer.End();
+
+			bounds.Update(skeleton, true);
+			MouseState mouse = Mouse.GetState();
+			headSlot.G = 1;
+			headSlot.B = 1;
+			if (bounds.AabbContainsPoint(mouse.X, mouse.Y)) {
+				BoundingBoxAttachment hit = bounds.ContainsPoint(mouse.X, mouse.Y);
+				if (hit != null) {
+					headSlot.G = 0;
+					headSlot.B = 0;
 				}
-				
-				if (++animation > 1)
-				{
-					animation = 0;
-				}
-				
-				this.SetSkeletonStartPosition ();
 			}
-			
-			base.Update (gameTime);
+
+			base.Draw(gameTime);
 		}
 
-		protected override void Dispose (bool disposing)
-		{
-			if (this.textureMaps != null)
-			{
-				foreach (var textureMap in this.textureMaps)
-				{
-					if (textureMap != null && !textureMap.IsDisposed)
-					{
-						textureMap.Dispose ();
-					}
-				}
-			
-				this.textureMaps = null;
-			}
+		public void Start (AnimationState state, int trackIndex) {
+			Console.WriteLine(trackIndex + " " + state.GetCurrent(trackIndex) + ": start");
+		}
 
-			this.atlas.Dispose();
-			this.atlas = null;
+		public void End (AnimationState state, int trackIndex) {
+			Console.WriteLine(trackIndex + " " + state.GetCurrent(trackIndex) + ": end");
+		}
 
-			base.Dispose (disposing);
+		public void Complete (AnimationState state, int trackIndex, int loopCount) {
+			Console.WriteLine(trackIndex + " " + state.GetCurrent(trackIndex) + ": complete " + loopCount);
+		}
+
+		public void Event (AnimationState state, int trackIndex, Event e) {
+			Console.WriteLine(trackIndex + " " + state.GetCurrent(trackIndex) + ": event " + e);
 		}
 	}
 }
-

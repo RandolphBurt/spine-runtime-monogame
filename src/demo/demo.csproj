@@ -110,8 +110,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Content Include="Content\crab-skeleton.json" />
-    <Content Include="Content\crab.atlas" />
-    <Content Include="Content\crab.png" />
+    <Content Include="Content\goblins-ffd.json" />
+    <Content Include="Content\goblins-ffd.atlas" />
+    <Content Include="Content\goblins-ffd.png" />
+    <Content Include="Content\spineboy.atlas" />
+    <Content Include="Content\spineboy.json" />
+    <Content Include="Content\spineboy.png" />
   </ItemGroup>
 </Project>
