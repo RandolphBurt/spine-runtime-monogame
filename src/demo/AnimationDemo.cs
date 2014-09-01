@@ -69,11 +69,13 @@ namespace Demo {
 			skeletonRenderer.PremultipliedAlpha = true;
 
 			// String name = "spineboy";
-			String name = "goblins-ffd";
+			// String name = "goblins-ffd";
+			String name = "raptor";
 
 			Atlas atlas = new Atlas("Content/" + name + ".atlas", new XnaTextureLoader(GraphicsDevice));
 			SkeletonJson json = new SkeletonJson(atlas);
 			if (name == "spineboy") json.Scale = 0.6f;
+			if (name == "raptor") json.Scale = 0.5f;
 			skeleton = new Skeleton(json.ReadSkeletonData("Content/" + name + ".json"));
 			if (name == "goblins-ffd") skeleton.SetSkin("goblin");
 
@@ -95,6 +97,10 @@ namespace Demo {
 				TrackEntry entry = state.AddAnimation(0, "jump", false, 0);
 				entry.End += End; // Event handling for queued animations.
 				state.AddAnimation(0, "run", true, 0);
+			} else if (name == "raptor") {
+				state.SetAnimation(0, "walk", true);
+				state.SetAnimation(1, "empty", false);
+				state.AddAnimation(1, "gungrab", false, 2);
 			} else {
 				state.SetAnimation(0, "walk", true);
 			}
@@ -132,13 +138,18 @@ namespace Demo {
 
 			bounds.Update(skeleton, true);
 			MouseState mouse = Mouse.GetState();
-			headSlot.G = 1;
-			headSlot.B = 1;
-			if (bounds.AabbContainsPoint(mouse.X, mouse.Y)) {
-				BoundingBoxAttachment hit = bounds.ContainsPoint(mouse.X, mouse.Y);
-				if (hit != null) {
-					headSlot.G = 0;
-					headSlot.B = 0;
+			if (headSlot != null)
+			{
+				headSlot.G = 1;
+				headSlot.B = 1;
+				if (bounds.AabbContainsPoint (mouse.X, mouse.Y))
+				{
+					BoundingBoxAttachment hit = bounds.ContainsPoint (mouse.X, mouse.Y);
+					if (hit != null)
+					{
+						headSlot.G = 0;
+						headSlot.B = 0;
+					}
 				}
 			}
 

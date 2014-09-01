@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{10E6C9D9-4D09-48A8-86CA-D9EE044F090F}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -109,6 +109,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <Content Include="Content\goblins-ffd.json" />
     <Content Include="Content\goblins-ffd.atlas" />
@@ -116,5 +117,8 @@
     <Content Include="Content\spineboy.atlas" />
     <Content Include="Content\spineboy.json" />
     <Content Include="Content\spineboy.png" />
+    <Content Include="Content\raptor.atlas" />
+    <Content Include="Content\raptor.json" />
+    <Content Include="Content\raptor.png" />
   </ItemGroup>
 </Project>
