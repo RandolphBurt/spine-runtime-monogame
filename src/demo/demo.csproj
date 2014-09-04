@@ -120,5 +120,8 @@
     <Content Include="Content\raptor.atlas" />
     <Content Include="Content\raptor.json" />
     <Content Include="Content\raptor.png" />
+    <Content Include="Content\crab.atlas" />
+    <Content Include="Content\crab.json" />
+    <Content Include="Content\crab.png" />
   </ItemGroup>
 </Project>

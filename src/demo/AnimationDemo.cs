@@ -70,7 +70,7 @@ namespace Demo {
 
 			// String name = "spineboy";
 			// String name = "goblins-ffd";
-			String name = "raptor";
+			String name = "crab";
 
 			Atlas atlas = new Atlas("Content/" + name + ".atlas", new XnaTextureLoader(GraphicsDevice));
 			SkeletonJson json = new SkeletonJson(atlas);
@@ -101,12 +101,23 @@ namespace Demo {
 				state.SetAnimation(0, "walk", true);
 				state.SetAnimation(1, "empty", false);
 				state.AddAnimation(1, "gungrab", false, 2);
+			} else if (name == "crab") {
+				state.SetAnimation(0, "WalkLeft", true);
 			} else {
 				state.SetAnimation(0, "walk", true);
 			}
 
-			skeleton.X = 400;
-			skeleton.Y = 590;
+			if (name == "crab")
+			{
+				skeleton.X = 500;
+				skeleton.Y = 590;
+			}
+			else
+			{
+				skeleton.X = 400;
+				skeleton.Y = 590;
+			}
+
 			skeleton.UpdateWorldTransform();
 
 			headSlot = skeleton.FindSlot("head");
